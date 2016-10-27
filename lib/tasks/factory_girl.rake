@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 namespace :factory_girl do
-  desc "Verify that all FactoryGirl factories are valid"
+  desc 'Verify that all FactoryGirl factories are valid'
   task lint: :environment do
     if Rails.env.test?
       begin
