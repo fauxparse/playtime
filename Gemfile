@@ -26,6 +26,9 @@ gem 'title'
 gem 'uglifier'
 
 group :development do
+  gem 'guard'
+  gem 'guard-rails', require: false
+  gem 'guard-rspec', require: false
   gem 'listen'
   gem 'spring'
   gem 'spring-commands-rspec'
