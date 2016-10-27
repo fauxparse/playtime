@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Sluggable
   extend ActiveSupport::Concern
 
@@ -16,8 +17,8 @@ module Sluggable
     end
 
     def sluggable_options(options)
-      options.reverse_merge(DEFAULT_OPTIONS).tap do |options|
-        options[:limit] ||= columns_hash[options[:url_attribute].to_s].limit
+      options.reverse_merge(DEFAULT_OPTIONS).tap do |opts|
+        opts[:limit] ||= columns_hash[opts[:url_attribute].to_s].limit
       end
     end
   end
