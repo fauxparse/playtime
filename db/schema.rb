@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161027205414) do
+ActiveRecord::Schema.define(version: 20161027224739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(version: 20161027205414) do
   create_table "invitations", force: :cascade do |t|
     t.integer  "sponsor_id"
     t.integer  "member_id"
-    t.string   "email",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "email",                 null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "token",      limit: 64
     t.index ["member_id"], name: "index_invitations_on_member_id", using: :btree
     t.index ["sponsor_id"], name: "index_invitations_on_sponsor_id", using: :btree
   end
@@ -43,9 +44,10 @@ ActiveRecord::Schema.define(version: 20161027205414) do
   create_table "members", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "team_id"
-    t.boolean  "admin",      default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.boolean  "admin",                  default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "name",       limit: 128
     t.index ["team_id", "user_id"], name: "index_members_on_team_id_and_user_id", using: :btree
     t.index ["team_id"], name: "index_members_on_team_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree

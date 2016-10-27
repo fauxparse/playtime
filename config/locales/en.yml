@@ -18,6 +18,13 @@ en:
   titles:
     application: Playtime
 
+  member_mailer:
+    invitation:
+      subject: "Invitation to join %{team}"
+      salutation: "Hi %{member},"
+      opening: "%{sponsor} has invited you to join %{team}."
+      instructions: "To accept this invitation, click the link below, or copy and paste it into your browser."
+
   activerecord:
     errors:
       models:

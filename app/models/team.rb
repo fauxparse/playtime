@@ -6,4 +6,8 @@ class Team < ApplicationRecord
   has_many :members, -> { includes :user }
 
   validates :name, :slug, presence: true
+
+  def to_s
+    name
+  end
 end

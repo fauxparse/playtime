@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :member do
+    name 'Ripley'
     user nil
     team
     admin false
@@ -10,6 +11,7 @@ FactoryGirl.define do
     end
 
     factory :admin do
+      name 'Dallas'
       user
       admin true
     end
