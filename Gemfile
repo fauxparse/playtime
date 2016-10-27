@@ -40,6 +40,7 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails", "~> 3.5.0.beta4"
+  gem "rubocop", require: false
 end
 
 group :development, :staging do
