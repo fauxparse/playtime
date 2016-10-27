@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "2.3.1"
 
 gem "autoprefixer-rails"
+gem "clearance"
 gem "delayed_job_active_record"
 gem "flutie"
 gem "honeybadger"
