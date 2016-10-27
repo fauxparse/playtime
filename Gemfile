@@ -5,6 +5,7 @@ ruby '2.3.1'
 
 gem 'autoprefixer-rails'
 gem 'clearance'
+gem 'cry'
 gem 'delayed_job_active_record'
 gem 'flutie'
 gem 'honeybadger'
@@ -29,6 +30,7 @@ group :development do
   gem 'guard'
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
+  gem 'guard-rubocop', require: false
   gem 'listen'
   gem 'spring'
   gem 'spring-commands-rspec'

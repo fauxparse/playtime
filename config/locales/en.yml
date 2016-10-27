@@ -17,3 +17,11 @@ en:
 
   titles:
     application: Playtime
+
+  activerecord:
+    errors:
+      models:
+        invitation:
+          attributes:
+            member_id:
+              different_teams: "must be from the same team as you"

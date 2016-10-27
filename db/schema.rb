@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161027102105) do
+ActiveRecord::Schema.define(version: 20161027205414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20161027102105) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "sponsor_id"
+    t.integer  "member_id"
+    t.string   "email",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_invitations_on_member_id", using: :btree
+    t.index ["sponsor_id"], name: "index_invitations_on_sponsor_id", using: :btree
   end
 
   create_table "members", force: :cascade do |t|
@@ -60,6 +70,8 @@ ActiveRecord::Schema.define(version: 20161027102105) do
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true, using: :btree
   end
 
+  add_foreign_key "invitations", "members", column: "sponsor_id", on_delete: :cascade
+  add_foreign_key "invitations", "members", on_delete: :cascade
   add_foreign_key "members", "teams"
   add_foreign_key "members", "users"
 end
