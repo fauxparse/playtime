@@ -11,6 +11,7 @@ class Invitation < ApplicationRecord
     email: { strict_mode: true, allow_blank: true }
   validates :token, presence: true, uniqueness: true
   validate :ensure_same_team, if: %i(sponsor_id? member_id?)
+  validate :not_existing_user, if: %i(sponsor_id? member_id?)
 
   def to_param
     token
@@ -27,6 +28,14 @@ class Invitation < ApplicationRecord
     while token.blank? ||
           Invitation.where(token: token).where.not(id: id).exists?
       self.token = SecureRandom.hex(32)
+    end
+  end
+
+  def not_existing_user
+    if member.user.present?
+      errors.add(:member_id, :existing_user)
+    elsif team.members.joins(:user).where('users.email = ?', email).exists?
+      errors.add(:email, :duplicate)
     end
   end
 end

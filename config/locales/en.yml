@@ -30,5 +30,8 @@ en:
       models:
         invitation:
           attributes:
+            email:
+              duplicate: "belongs to someone else in this team"
             member_id:
+              existing_user: "is already a registered user"
               different_teams: "must be from the same team as you"

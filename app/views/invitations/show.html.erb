@@ -1,0 +1,4 @@
+<p>Invitation from <%= invitation.sponsor %> to join <%= invitation.team %>.</p>
+
+<%= button_to 'Accept', accept_invitation_path(invitation), method: :post %>
+<%= button_to 'Decline', decline_invitation_path(invitation), method: :post %>

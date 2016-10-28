@@ -27,6 +27,12 @@ RSpec.describe Member, type: :model do
 
     it_behaves_like 'a valid member'
 
+    describe '#email?' do
+      it 'is false' do
+        expect(member.email?).to be false
+      end
+    end
+
     context 'with admin set' do
       before { member.admin = true }
 
@@ -42,6 +48,12 @@ RSpec.describe Member, type: :model do
     subject(:member) { build(:member, :with_user) }
 
     it_behaves_like 'a valid member'
+
+    describe '#email?' do
+      it 'is true' do
+        expect(member.email?).to be true
+      end
+    end
 
     context 'with admin set' do
       before { member.admin = true }
