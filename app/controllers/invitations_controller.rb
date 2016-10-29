@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 class InvitationsController < ApplicationController
-  before_action :require_login
   before_action :check_if_already_a_member, only: :show
 
   def show

@@ -16,10 +16,10 @@
 #
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
-guard 'rails' do
-  watch('Gemfile.lock')
-  watch(%r{^(config|lib)/.*})
-end
+# guard 'rails' do
+#   watch('Gemfile.lock')
+#   watch(%r{^(config|lib)/.*})
+# end
 
 # Note: The cmd option is now required due to the increasing number of ways
 #       rspec may be run, below are examples of the most common uses.

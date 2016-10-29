@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  resources :passwords, controller: 'clearance/passwords', only: %i(create new)
-  resource :session, controller: 'clearance/sessions', only: %i(create)
+  resources :passwords, controller: 'passwords', only: %i(create new)
+  resource :session, controller: 'sessions', only: %i(create)
 
-  resources :users, controller: 'clearance/users', only: %i(create) do
+  resources :users, controller: 'users', only: %i(create) do
     resource :password,
-      controller: 'clearance/passwords',
+      controller: 'passwords',
       only: %i(create edit update)
   end
 
@@ -18,9 +18,15 @@ Rails.application.routes.draw do
 
   resources :teams
 
-  get '/login' => 'clearance/sessions#new', as: 'sign_in'
-  delete '/logout' => 'clearance/sessions#destroy', as: 'sign_out'
-  get '/register' => 'clearance/users#new', as: 'sign_up'
+  get '/login' => 'sessions#new', as: 'sign_in'
+  delete '/logout' => 'sessions#destroy', as: 'sign_out'
+  get '/register' => 'users#new', as: 'sign_up'
 
-  root to: 'teams#index'
+  constraints Clearance::Constraints::SignedIn.new do
+    root to: 'teams#index', as: :signed_in_root
+  end
+
+  constraints Clearance::Constraints::SignedOut.new do
+    root to: 'public#index'
+  end
 end
