@@ -1,5 +1,7 @@
 # Playtime
 
+[![Code Climate](https://codeclimate.com/github/fauxparse/playtime/badges/gpa.svg)](https://codeclimate.com/github/fauxparse/playtime) [![Test Coverage](https://codeclimate.com/github/fauxparse/playtime/badges/coverage.svg)](https://codeclimate.com/github/fauxparse/playtime/coverage) [![CircleCI](https://circleci.com/gh/fauxparse/playtime.svg?style=shield)](https://circleci.com/gh/fauxparse/playtime)
+
 ## Getting Started
 
 After you have cloned this repo, run this setup script to set up your machine
