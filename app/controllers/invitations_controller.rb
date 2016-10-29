@@ -48,9 +48,12 @@ class InvitationsController < ApplicationController
   end
 
   def check_if_already_a_member
-    if invitation.present? && current_user.teams.include?(invitation.team)
-      invitation.declined!
-      redirect_to team_path(invitation.team)
-    end
+    decline_and_redirect_to_existing \
+      if invitation.present? && current_user.teams.include?(invitation.team)
+  end
+
+  def decline_and_redirect_to_existing
+    invitation.declined!
+    redirect_to team_path(invitation.team)
   end
 end

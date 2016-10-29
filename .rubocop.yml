@@ -9,6 +9,12 @@ Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'Guardfile'
+    - 'config/environments/*'
+
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
