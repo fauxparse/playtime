@@ -30,4 +30,20 @@ FactoryGirl.define do
         FactoryGirl.create(:member, team: invitation.sponsor.team)
     end
   end
+
+  factory :event do
+    team
+    name 'Bug Hunt'
+
+    trait :scheduled do
+      schedule do
+        IceCube::Schedule.new(
+          Time.zone.local(2016, 10, 21, 21),
+          duration: 1.hour
+        ).tap do |schedule|
+          schedule.add_recurrence_rule IceCube::Rule.weekly.day(:friday)
+        end
+      end
+    end
+  end
 end
