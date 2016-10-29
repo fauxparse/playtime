@@ -1,0 +1,20 @@
+html, body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#application {
+  @include position(fixed, 0% 0% 0% 0%);
+  background: $oc-gray-7;
+}
+
+main {
+  @include position(absolute, 0% null 0% 0%);
+  width: 100%;
+  background: $oc-gray-1;
+
+  .shim {
+    @include position(absolute, 0% 0% 0% 0%);
+  }
+}

@@ -2,5 +2,7 @@ database:
   override:
     - bin/setup
 test:
+  pre:
+    - npm run build
   override:
     - COVERAGE=true bin/rake

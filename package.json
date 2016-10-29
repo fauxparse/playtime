@@ -25,6 +25,7 @@
     "rwr-view-helpers": "^0.1.1",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
+    "velocity-react": "^1.1.11",
     "webpack": "^1.13.0"
   },
   "scripts": {
