@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :teams
+
   get '/login' => 'clearance/sessions#new', as: 'sign_in'
   delete '/logout' => 'clearance/sessions#destroy', as: 'sign_out'
   get '/register' => 'clearance/users#new', as: 'sign_up'

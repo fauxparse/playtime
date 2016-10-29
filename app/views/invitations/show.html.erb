@@ -1,4 +1,4 @@
-<p>Invitation from <%= invitation.sponsor %> to join <%= invitation.team %>.</p>
+<p><%= t('.details', sponsor: invitation.sponsor, team: invitation.team) %></p>
 
-<%= button_to 'Accept', accept_invitation_path(invitation), method: :post %>
-<%= button_to 'Decline', decline_invitation_path(invitation), method: :post %>
+<%= button_to t('.accept'), accept_invitation_path(invitation), method: :post %>
+<%= button_to t('.decline'), decline_invitation_path(invitation), method: :post %>

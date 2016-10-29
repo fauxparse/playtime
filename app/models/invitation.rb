@@ -4,6 +4,12 @@ class Invitation < ApplicationRecord
   belongs_to :member
   has_one :team, through: :sponsor
 
+  enum state: {
+    pending: 'pending',
+    accepted: 'accepted',
+    declined: 'declined'
+  }
+
   before_validation :generate_token, unless: :token?
 
   validates :sponsor_id, :member_id, :email, presence: true

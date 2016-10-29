@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe InviteMember do
+describe InviteMember, type: :service do
   include Rails.application.routes.url_helpers
 
   subject(:service) { InviteMember.new(sponsor, member, email) }

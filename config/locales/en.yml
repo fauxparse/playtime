@@ -18,6 +18,16 @@ en:
   titles:
     application: Playtime
 
+  invitations:
+    flashes:
+      invalid: "That invitation code is not valid."
+      accepted: "Invitation accepted."
+      declined: "Invitation declined."
+    show:
+      details: "Invitation from %{sponsor} to join %{team}."
+      accept: "Accept"
+      decline: "Decline"
+
   member_mailer:
     invitation:
       subject: "Invitation to join %{team}"

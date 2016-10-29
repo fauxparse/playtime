@@ -11,6 +11,10 @@ RSpec.describe Invitation, type: :model do
     expect(invitation).to be_valid
   end
 
+  it 'is pending' do
+    expect(invitation).to be_pending
+  end
+
   context 'without a sponsor' do
     before { invitation.sponsor = nil }
 
