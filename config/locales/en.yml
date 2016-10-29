@@ -17,3 +17,31 @@ en:
 
   titles:
     application: Playtime
+
+  invitations:
+    flashes:
+      invalid: "That invitation code is not valid."
+      accepted: "Invitation accepted."
+      declined: "Invitation declined."
+    show:
+      details: "Invitation from %{sponsor} to join %{team}."
+      accept: "Accept"
+      decline: "Decline"
+
+  member_mailer:
+    invitation:
+      subject: "Invitation to join %{team}"
+      salutation: "Hi %{member},"
+      opening: "%{sponsor} has invited you to join %{team}."
+      instructions: "To accept this invitation, click the link below, or copy and paste it into your browser."
+
+  activerecord:
+    errors:
+      models:
+        invitation:
+          attributes:
+            email:
+              duplicate: "belongs to someone else in this team"
+            member_id:
+              existing_user: "is already a registered user"
+              different_teams: "must be from the same team as you"

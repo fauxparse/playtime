@@ -13,6 +13,10 @@ module Features
       sign_in_with user.email, password
     end
 
+    def sign_in_as(user)
+      sign_in_with user.email, attributes_for(:user)[:password]
+    end
+
     def sign_in_with(email, password)
       visit sign_in_path
       fill_in 'session_email', with: email

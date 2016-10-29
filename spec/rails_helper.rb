@@ -5,6 +5,9 @@ require File.expand_path('../../config/environment', __FILE__)
 abort('DATABASE_URL environment variable is set') if ENV['DATABASE_URL']
 
 require 'rspec/rails'
+require 'clearance/rspec'
+require 'email_spec'
+require 'email_spec/rspec'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
 

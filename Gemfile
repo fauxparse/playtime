@@ -5,8 +5,10 @@ ruby '2.3.1'
 
 gem 'autoprefixer-rails'
 gem 'clearance'
+gem 'cry'
 gem 'delayed_job_active_record'
 gem 'flutie'
+gem 'auto_strip_attributes'
 gem 'honeybadger'
 gem 'jquery-rails'
 gem 'normalize-rails', '~> 3.0.0'
@@ -29,6 +31,7 @@ group :development do
   gem 'guard'
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
+  gem 'guard-rubocop', require: false
   gem 'listen'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -54,6 +57,7 @@ end
 group :test do
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'email_spec'
   gem 'formulaic'
   gem 'launchy'
   gem 'rspec-collection_matchers'

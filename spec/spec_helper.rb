@@ -7,6 +7,14 @@ if ENV.fetch('COVERAGE', false)
     SimpleCov.coverage_dir(dir)
   end
 
+  SimpleCov.add_filter do |src_file|
+    File.readlines(src_file.filename).size <= 5
+  end
+
+  SimpleCov.add_group 'Services' do |src_file|
+    src_file.filename =~ /^#{Rails.root.join('app', 'services')}/
+  end
+
   SimpleCov.start 'rails'
 end
 
