@@ -10,7 +10,7 @@ html, body {
 
 #application {
   @include position(fixed, 0% 0% 0% 0%);
-  background: $oc-gray-7;
+  background: $sidebar-background-color;
 }
 
 main {

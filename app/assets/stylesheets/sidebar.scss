@@ -1,0 +1,79 @@
+#application > aside {
+  @include position(fixed, 0% null 0% 0%);
+  width: 16rem;
+  overflow-y: auto;
+  color: $sidebar-font-color;
+  -webkit-font-smoothing: antialiased;
+
+  > header {
+    position: relative;
+    z-index: 10;
+    background: $sidebar-background-color;
+    border-bottom: 1px solid rgba($sidebar-font-color, .25);
+
+    img {
+      display: block;
+      margin: 1rem auto 0;
+      width: 6rem;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+    }
+
+    [rel="team"] {
+      background: none;
+      padding: .5rem .5rem .5rem 1rem;
+      font-weight: $base-font-weight;
+      border-radius: 0;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      color: $sidebar-font-color;
+      outline: none;
+      overflow: hidden;
+
+      span {
+        @include ellipsis;
+        text-align: left;
+        flex: 1;
+        line-height: $base-line-height;
+      }
+
+      svg {
+        transition: transform $base-duration $base-timing;
+      }
+
+      &[data-open="true"] svg {
+        transform: rotate(180deg);
+      }
+
+      path {
+        fill: currentColor;
+      }
+    }
+  }
+
+  > section {
+    position: relative;
+    z-index: 0;
+
+    > nav {
+      @include position(absolute, 0% 0% null 0%);
+    }
+
+    ul {
+      margin: 0;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      @include ellipsis;
+      display: block;
+      color: inherit;
+      padding: .5rem 1rem;
+    }
+  }
+}

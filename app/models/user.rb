@@ -2,6 +2,6 @@
 class User < ApplicationRecord
   include Clearance::User
 
-  has_many :members
+  has_many :members, -> { includes(:team) }
   has_many :teams, through: :members
 end

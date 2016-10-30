@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/rails-api/active_model_serializers.git
+  revision: cb20b957edbd393c3d09e4bb7b4623ea522cf45b
+  specs:
+    active_model_serializers (0.10.2)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      jsonapi (= 0.1.1.beta2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -147,7 +156,9 @@ GEM
     honeybadger (2.7.0)
     htmlentities (4.3.4)
     i18n (0.7.0)
-    json (2.0.2)
+    json (1.8.3)
+    jsonapi (0.1.1.beta2)
+      json (~> 1.8)
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (3.1.5)
@@ -327,7 +338,7 @@ GEM
     uniform_notifier (1.10.0)
     vanilla-ujs (1.2.0)
       railties (>= 4.2.0)
-    web-console (3.3.1)
+    web-console (3.4.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       debug_inspector
@@ -346,6 +357,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers!
   auto_strip_attributes
   autoprefixer-rails
   awesome_print

@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
     @current_team ||= current_user.teams.find_by(slug: team_id)
   end
 
+  def current_member
+    @current_member ||=
+      current_user.members.where(team_id: team_id).first ||
+      Member.new(user: user)
+  end
+
   def team_id
     params[:team_id]
   end

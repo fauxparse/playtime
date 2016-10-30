@@ -3,12 +3,14 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
+gem 'active_model_serializers',
+  git: 'https://github.com/rails-api/active_model_serializers.git'
+gem 'auto_strip_attributes'
 gem 'autoprefixer-rails'
 gem 'clearance'
 gem 'cry'
 gem 'delayed_job_active_record'
 gem 'flutie'
-gem 'auto_strip_attributes'
 gem 'honeybadger'
 gem 'normalize-rails', '~> 3.0.0'
 gem 'pg'

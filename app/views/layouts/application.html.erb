@@ -17,7 +17,7 @@
       <%= link_to 'Sign in', sign_in_path %>
     <% end %>
 
-    <%= redux_store 'Store', { user: { email: current_user.email } } %>
+    <%= redux_store 'Store', { user: serialize(current_user, include: 'members, members.team') } %>
     <%= redux_router 'Routes' %>
 
     <%= yield %>
