@@ -1,5 +1,14 @@
-import RWR from 'react-webpack-rails';
+import RWR, { integrationsManager } from 'react-webpack-rails';
+import RWRRedux from 'rwr-redux';
+
 RWR.run();
 
-import Application from './components/application';
-RWR.registerComponent('Application', Application);
+integrationsManager.register('redux-store', RWRRedux.storeIntegrationWrapper);
+integrationsManager.register('redux-container', RWRRedux.containerIntegrationWrapper);
+integrationsManager.register('redux-router', RWRRedux.routerIntegrationWrapper);
+
+import Store from './store';
+RWRRedux.registerStore('Store', Store);
+
+import Routes from './routes';
+RWRRedux.registerRoutes('Routes', Routes);

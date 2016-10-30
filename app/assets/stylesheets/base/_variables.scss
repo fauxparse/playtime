@@ -3,7 +3,8 @@ $medium-screen: 600px;
 $large-screen: 900px;
 
 // Typography
-$base-font-family: $font-stack-system;
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,600');
+$base-font-family: 'Work Sans', $font-stack-system;
 $heading-font-family: $base-font-family;
 
 // Font Sizes

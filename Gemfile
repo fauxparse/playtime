@@ -80,3 +80,4 @@ gem 'refills', group: [:development, :test]
 
 gem 'react_webpack_rails'
 gem 'rwr-view_helpers'
+gem 'rwr-redux'

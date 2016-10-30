@@ -16,8 +16,12 @@
     <% else %>
       <%= link_to 'Sign in', sign_in_path %>
     <% end %>
-    <%= react_component('Application', flash: user_facing_flashes) %>
+
+    <%= redux_store 'Store', { user: { email: current_user.email } } %>
+    <%= redux_router 'Routes' %>
+
     <%= yield %>
+
     <%= render 'javascript' %>
     <%= render 'layouts/react_hot_assets' %>
     <%= render 'css_overrides' %>

@@ -264,6 +264,8 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
+    rwr-redux (0.5.0)
+      react_webpack_rails (>= 0.5.0)
     rwr-view_helpers (0.2.0)
       rails
       react_webpack_rails (>= 0.6.0)
@@ -386,6 +388,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails (~> 3.5.0.beta4)
   rubocop
+  rwr-redux
   rwr-view_helpers
   sass-rails (~> 5.0)
   shoulda-matchers
