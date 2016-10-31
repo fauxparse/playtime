@@ -39,7 +39,6 @@ class Sidebar extends Component {
         <ul>
           {this.props.teams.map((team) => <li key={team.id}><Link to={`/teams/${team.id}`}>{team.name}</Link></li>)}
           <li><Link to="/teams">Manage teams</Link></li>
-          <li><a href="/logout" data-method="delete">Log out</a></li>
         </ul>
       </nav>
     );
@@ -50,6 +49,7 @@ class Sidebar extends Component {
       <nav key="team">
         <ul>
           <li><a href="#">Settings</a></li>
+          <li><a rel="logout" href="/logout" data-method="delete">Sign out</a></li>
         </ul>
       </nav>
     );

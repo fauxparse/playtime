@@ -5,7 +5,7 @@ import Teams from '../components/teams';
 
 export default (
   <Route component={Application}>
-    <Redirect from="/" to="/teams"/>
+    <Route path="/" component={Teams} />
     <Route path="/teams" component={Teams} />
   </Route>
 );

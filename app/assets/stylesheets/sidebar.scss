@@ -2,6 +2,7 @@
   @include position(fixed, 0% null 0% 0%);
   width: 16rem;
   overflow-y: auto;
+  background-color: $sidebar-background-color;
   color: $sidebar-font-color;
   -webkit-font-smoothing: antialiased;
 
@@ -62,6 +63,7 @@
 
     ul {
       margin: 0;
+      padding: .5rem 0;
     }
 
     li {

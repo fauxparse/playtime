@@ -10,12 +10,6 @@
   </head>
   <body class="<%= body_class %>">
     <%= render "flashes" -%>
-    <% if signed_in? %>
-      Signed in as: <%= current_user.email %>
-      <%= button_to 'Sign out', sign_out_path, method: :delete %>
-    <% else %>
-      <%= link_to 'Sign in', sign_in_path %>
-    <% end %>
 
     <%= redux_store 'Store', { user: serialize(current_user, include: 'members, members.team') } %>
     <%= redux_router 'Routes' %>

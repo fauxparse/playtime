@@ -25,7 +25,10 @@ module Features
     end
 
     def sign_out
-      click_button I18n.t('layouts.application.sign_out')
+      find(:css, '[rel="menu"]').click
+      within(:css, 'aside') do
+        click_link I18n.t('layouts.application.sign_out')
+      end
     end
 
     def sign_up_with(email, password)
@@ -47,6 +50,7 @@ module Features
     def user_with_reset_password
       user = FactoryGirl.create(:user)
       reset_password_for user.email
+      sleep 0.5
       user.reload
     end
   end
