@@ -14,8 +14,8 @@ class Sidebar extends Component {
       <aside>
         <header>
           <img src={this.props.user.avatar}/>
-          <button rel="team" data-open={this.state.menu == 'user'} onClick={() => this.toggleUserMenu()}>
-            <span>{this.props.user.email}</span>
+          <button rel="team" data-open={this.state.menu == 'teams'} onClick={() => this.toggleMenu()}>
+            <span>{this.props.team ? this.props.team.name : "Your teams"}</span>
             <svg height={24} width={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 10l5 5 5-5z"/>
             </svg>
@@ -28,17 +28,17 @@ class Sidebar extends Component {
     );
   }
 
-  toggleUserMenu() {
-    const menu = this.state.menu == 'user' ? 'team' : 'user';
+  toggleMenu() {
+    const menu = this.state.menu == 'teams' ? 'team' : 'teams';
     this.setState({ menu });
   }
 
-  userMenu() {
+  teamsMenu() {
     return (
-      <nav key="user">
+      <nav key="teams" onClick={() => this.toggleMenu()}>
         <ul>
-          {this.props.teams.map((team) => <li key={team.id}><Link to={`/teams/${team.id}`}>{team.name}</Link></li>)}
-          <li><Link to="/teams">Manage teams</Link></li>
+          {this.props.teams.map((team) => <li key={team.id}><Link to={`/teams/${team.id}`} activeClassName="active">{team.name}</Link></li>)}
+          <li><Link to="/teams" activeClassName="active">Manage teams</Link></li>
         </ul>
       </nav>
     );
@@ -56,7 +56,7 @@ class Sidebar extends Component {
   }
 
   menuAnimation() {
-    const direction = this.state.menu == 'user' ? 1 : -1;
+    const direction = this.state.menu == 'teams' ? 1 : -1;
     return {
       enter: {
         duration: 500,
@@ -83,7 +83,7 @@ class Sidebar extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    teams: state.user.members.map((member) => member.team).sort((a, b) => a.name.localeCompare(b.name))
+    teams: state.teams.sort((a, b) => a.name.localeCompare(b.name))
   };
 }
 

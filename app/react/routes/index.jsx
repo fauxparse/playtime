@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 import Application from '../containers/application';
-import Teams from '../components/teams';
+import Teams from '../containers/teams';
+import Team from '../containers/team';
 
 export default (
   <Route component={Application}>
-    <Route path="/" component={Teams} />
+    <Redirect from="/" to="/teams" />
+    <Route path="/teams/:team" component={Team} />
     <Route path="/teams" component={Teams} />
   </Route>
 );

@@ -22,7 +22,7 @@ main {
   flex-direction: column;
   box-shadow: 0 0 .5rem rgba($oc-gray-9, .25);
 
-  > header {
+  > section > header {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -39,6 +39,21 @@ main {
 
       &:hover, &:active, &:focus {
         background-color: transparent;
+      }
+    }
+
+    h2 {
+      @include ellipsis;
+      flex: 1;
+      font-size: $base-font-size;
+      font-weight: $base-font-weight;
+      margin: 0;
+      padding: .5rem 0;
+      text-align: center;
+      line-height: $base-line-height;
+
+      &:last-child {
+        margin-right: 2.5rem;
       }
     }
   }
