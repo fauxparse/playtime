@@ -7,7 +7,7 @@ class Team extends Component {
   render() {
     return (
       <section>
-        <SectionHeader title={this.props.team.name}/>
+        <SectionHeader title={this.props.team ? this.props.team.name : 'Loading…'}/>
       </section>
     );
   }

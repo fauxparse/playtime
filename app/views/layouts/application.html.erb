@@ -11,7 +11,7 @@
   <body class="<%= body_class %>">
     <%= render "flashes" -%>
 
-    <%= redux_store 'Store', { user: serialize(current_user, memberships: true), teams: serialize(current_user.teams) } %>
+    <%= redux_store 'Store', { user: serialize(current_user, memberships: true) } %>
     <%= redux_router 'Routes' %>
 
     <%= yield %>

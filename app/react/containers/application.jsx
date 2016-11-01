@@ -4,9 +4,14 @@ import { Router, Route, Redirect, Link, browserHistory } from 'react-router';
 import { VelocityComponent } from 'velocity-react';
 import Sidebar from './sidebar';
 import Team from './team';
-import { showSidebar } from '../actions';
+import { showSidebar, fetchTeams } from '../actions';
 
 class Application extends Component {
+  constructor(props) {
+    super(props);
+    props.fetchTeams();
+  }
+
   render() {
     return (
       <div id="application">
@@ -58,7 +63,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    hideSidebar: () => dispatch(showSidebar(false))
+    hideSidebar: () => dispatch(showSidebar(false)),
+    fetchTeams: () => dispatch(fetchTeams())
   };
 }
 

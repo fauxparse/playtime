@@ -1,4 +1,4 @@
-import SWITCH_TEAM from '../actions';
+import { SWITCH_TEAM, RECEIVE_TEAMS } from '../actions';
 
 export default function teams(state = [], action) {
   switch (action.type) {
@@ -6,6 +6,8 @@ export default function teams(state = [], action) {
       return state.map(
         (team) => Object.assign({}, team, { selected: team.id == action.id })
       );
+    case RECEIVE_TEAMS:
+      return action.teams;
     default:
       return state;
   }

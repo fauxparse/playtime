@@ -1,3 +1,7 @@
+import 'babel-polyfill';
+import 'velocity-animate';
+import 'velocity-animate/velocity.ui';
+
 import RWR, { integrationsManager } from 'react-webpack-rails';
 import RWRRedux from 'rwr-redux';
 
