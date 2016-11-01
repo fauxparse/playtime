@@ -50,7 +50,6 @@ module Features
     def user_with_reset_password
       user = FactoryGirl.create(:user)
       reset_password_for user.email
-      sleep 0.5
       user.reload
     end
   end
