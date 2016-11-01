@@ -21,9 +21,18 @@ class Sidebar extends Component {
             </svg>
           </button>
         </header>
-        <VelocityTransitionGroup component="section" {...this.menuAnimation()}>
-          {this[`${this.state.menu}Menu`]()}
-        </VelocityTransitionGroup>
+        <section>
+          <nav>
+            <VelocityTransitionGroup component="ul" {...this.menuAnimation()}>
+              {this.teamMenu()}
+            </VelocityTransitionGroup>
+          </nav>
+          <nav>
+            <VelocityTransitionGroup component="ul" {...this.menuAnimation()}>
+              {this.teamsMenu()}
+            </VelocityTransitionGroup>
+          </nav>
+        </section>
       </aside>
     );
   }
@@ -34,47 +43,43 @@ class Sidebar extends Component {
   }
 
   teamsMenu() {
-    return (
-      <nav key="teams" onClick={() => this.toggleMenu()}>
-        <ul>
-          {this.props.teams.map((team) => <li key={team.id}><Link to={`/teams/${team.id}`} activeClassName="active">{team.name}</Link></li>)}
-          <li><Link to="/teams" activeClassName="active">Manage teams</Link></li>
-        </ul>
-      </nav>
-    );
+    if (this.state.menu == 'teams') {
+      var teams = this.props.teams.map((team) => <li key={`teams.${team.id}`}><Link to={`/teams/${team.id}`} activeClassName="active">{team.name}</Link></li>),
+          manage = (<li key="teams.manage"><Link to="/teams" activeClassName="active">Manage teams</Link></li>);
+      return teams.concat([manage]);
+    } else {
+      return [];
+    }
   }
 
   teamMenu() {
-    return (
-      <nav key="team">
-        <ul>
-          <li><a href="#">Settings</a></li>
-          <li><a rel="logout" href="/logout" data-method="delete">Sign out</a></li>
-        </ul>
-      </nav>
-    );
+    if (this.state.menu == 'team') {
+      return [
+        (<li key="team.settings"><a href="#">Settings</a></li>),
+        (<li key="team.logout"><a rel="logout" href="/logout" data-method="delete">Sign out</a></li>)
+      ];
+    } else {
+      return [];
+    }
   }
 
   menuAnimation() {
-    const direction = this.state.menu == 'teams' ? 1 : -1;
+    const direction = this.state.menu == 'teams' ? 1 : -1,
+          leave = this.state.menu == 'teams' ? 'menuItemOutDown' : 'menuItemOutUp';
     return {
       enter: {
         duration: 500,
-        animation: {
-          translateY: 0,
-          opacity: 1
-        },
+        animation: 'menuItemIn',
+        stagger: 50,
         style: {
-          translateY: `${direction * -2}rem`,
+          translateY: `${direction * -50}%`,
           opacity: 0
         }
       },
       leave: {
         duration: 500,
-        animation: {
-          translateY: `${direction * 2}rem`,
-          opacity: 0
-        }
+        animation: leave,
+        stagger: 50
       }
     }
   }
@@ -86,5 +91,26 @@ function mapStateToProps(state) {
     teams: state.teams.sort((a, b) => a.name.localeCompare(b.name))
   };
 }
+
+Velocity.RegisterEffect('menuItemIn', {
+  defaultDuration: 500,
+  calls: [
+    [ { opacity: 1, translateY: 0 } ]
+  ]
+});
+
+Velocity.RegisterEffect('menuItemOutDown', {
+  defaultDuration: 500,
+  calls: [
+    [ { opacity: 0, translateY: '50%' } ]
+  ]
+});
+
+Velocity.RegisterEffect('menuItemOutUp', {
+  defaultDuration: 500,
+  calls: [
+    [ { opacity: 0, translateY: '-50%' } ]
+  ]
+});
 
 export default connect(mapStateToProps)(Sidebar);
