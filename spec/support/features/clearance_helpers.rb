@@ -5,6 +5,7 @@ module Features
       visit new_password_path
       fill_in 'password_email', with: email
       click_button I18n.t('helpers.submit.password.submit')
+      expect(page).to have_content I18n.t('passwords.create.description')
     end
 
     def sign_in
@@ -25,6 +26,8 @@ module Features
     end
 
     def sign_out
+      sleep 1
+      expect(page).to have_css('[rel="menu"]')
       find(:css, '[rel="menu"]').click
       within(:css, 'aside') do
         click_link I18n.t('layouts.application.sign_out')
