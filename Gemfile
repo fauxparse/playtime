@@ -63,6 +63,7 @@ group :test do
   gem 'email_spec'
   gem 'formulaic'
   gem 'launchy'
+  gem 'poltergeist'
   gem 'rspec-collection_matchers'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
