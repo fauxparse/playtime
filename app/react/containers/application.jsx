@@ -13,12 +13,13 @@ class Application extends Component {
   }
 
   render() {
+    const { team, children, params, location, sidebar } = this.props;
     return (
       <div id="application">
-        <Sidebar team={this.props.team}/>
+        <Sidebar team={team}/>
         <VelocityComponent {...this.sidebarAnimation()}>
-          <main data-sidebar-open={this.props.sidebar}>
-            {React.cloneElement(this.props.children, { key: location.pathname, team: this.props.team })}
+          <main data-sidebar-open={sidebar}>
+            {React.cloneElement(children, { key: params.team || location.pathname, team })}
             {this.shim()}
           </main>
         </VelocityComponent>

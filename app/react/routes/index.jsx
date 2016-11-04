@@ -1,13 +1,26 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router';
+import { Route, IndexRoute, Redirect } from 'react-router';
 import Application from '../containers/application';
 import Teams from '../containers/teams';
 import Team from '../containers/team';
+import Inbox from '../containers/inbox';
+import Events from '../containers/events';
+import NewEvent from '../containers/new_event';
+import People from '../containers/people';
+import Stats from '../containers/stats';
 
 export default (
   <Route component={Application}>
     <Redirect from="/" to="/teams" />
-    <Route path="/teams/:team" component={Team} />
-    <Route path="/teams" component={Teams} />
+    <Redirect from="/teams/:team" to="/teams/:team/inbox" />
+    <Route path="/teams/:team" component={Team}>
+      <Route path="inbox" component={Inbox}/>
+      <Route path="events" component={Events}>
+        <Route path="new" component={NewEvent}/>
+      </Route>
+      <Route path="people" component={People}/>
+      <Route path="stats" component={Stats}/>
+    </Route>
+    <Route path="/teams" component={Teams}/>
   </Route>
 );

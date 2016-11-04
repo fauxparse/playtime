@@ -1,0 +1,116 @@
+section.tabbed {
+  display: flex;
+  flex-direction: column;
+
+  > header {
+    border-bottom: $base-border;
+  }
+
+  > section {
+    flex: 1;
+    position: relative;
+
+    > section {
+      @include position(absolute, 0% null 0% 0%);
+      width: 100%;
+    }
+  }
+
+  > footer {
+    border-top: $base-border;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    svg {
+      display: block;
+
+      path {
+        fill: currentColor;
+      }
+    }
+
+    [role="button"] {
+      @include position(fixed, null null 2.25rem 50%);
+      @include size(3.5rem);
+      padding: 1rem;
+      border-radius: 50%;
+      color: $oc-white;
+      margin: -1.75rem;
+      z-index: 100;
+
+      a {
+        @include position(absolute, null null 2.25rem 50%);
+        @include size(3.5rem);
+        margin: -1.75rem;
+        z-index: 1;
+        border-radius: 50%;
+      }
+
+      [rel="close"] {
+        display: none;
+      }
+
+      [rel="open"].active {
+        display: none;
+
+        ~ [rel="close"] {
+          display: block;
+        }
+
+        ~ .icon {
+          transform: rotate(405deg);
+        }
+
+        ~ .circle {
+          transform: scale(100);
+          transition-duration: 2s;
+        }
+      }
+
+      svg {
+        transition: transform .5s $base-timing;
+      }
+
+      .circle {
+        @include position(absolute, 0% null null 0%);
+        @include size(100%);
+        z-index: -1;
+        transition: transform .5s $base-timing;
+        box-shadow: 0 1px .5rem rgba(0, 0, 0, .15);
+        border-radius: 50%;
+
+        circle {
+          fill: $accent-color;
+        }
+      }
+    }
+
+    > a:not([role="button"]) {
+      color: $base-font-color;
+      font-size: $tiny-font-size;
+      flex: 1 1 4.5rem;
+      max-width: 6rem;
+      padding: 1.5rem 0 .5rem;
+      opacity: .35;
+      transition: opacity $base-duration $base-timing;
+
+      &.active {
+        opacity: 1;
+      }
+
+      svg {
+        margin: 0 auto .25rem;
+      }
+
+      span {
+        display: block;
+        text-align: center;
+        line-height: 1;
+      }
+    }
+
+    a:nth-child(3) { margin-right: 2rem; }
+    a:nth-child(4) { margin-left: 2rem; }
+  }
+}

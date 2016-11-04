@@ -68,7 +68,10 @@ main {
 }
 
 button[rel="menu"] {
+  padding: .5rem;
+
   svg {
+    display: block;
     transition: transform .5s $ease-out-cubic;
   }
 

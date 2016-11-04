@@ -16,11 +16,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :teams
+  resources :teams do
+    resource :inbox, controller: 'inbox'
+    resources :events
+    resources :people
+    resources :stats
+  end
 
-  get '/login' => 'sessions#new', as: 'sign_in'
-  delete '/logout' => 'sessions#destroy', as: 'sign_out'
-  get '/register' => 'users#new', as: 'sign_up'
+  get '/login' => 'sessions#new', as: :sign_in
+  delete '/logout' => 'sessions#destroy', as: :sign_out
+  get '/register' => 'users#new', as: :sign_up
 
   constraints Clearance::Constraints::SignedIn.new do
     root to: 'teams#index', as: :signed_in_root
