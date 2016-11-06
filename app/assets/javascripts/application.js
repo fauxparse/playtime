@@ -11,6 +11,8 @@
 // about supported directives.
 //
 //= require vanilla-ujs
+//= require moment
+//= require moment-timezone-with-data-2010-2020
 //= require react_integration
 //= require react_bundle
 //= require_tree .

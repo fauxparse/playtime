@@ -45,6 +45,9 @@ class Team extends Component {
           </div>
           {TABS.map(Tab)}
         </footer>
+        <VelocityTransitionGroup enter={{animation: 'modalShow', delay: 250}} leave={{animation: 'modalHide'}} runOnMount={true}>
+          {children.props && children.props.modal}
+        </VelocityTransitionGroup>
       </section>
     );
   }
@@ -67,7 +70,7 @@ class Team extends Component {
       },
       leave: {
         duration: 500,
-        animation: direction > 1 ? 'slidePageLeft' : 'slidePageRight',
+        animation: direction > 0 ? 'slidePageLeft' : 'slidePageRight',
       }
     }
   }
@@ -85,27 +88,6 @@ Team.onEnter = function(nextState, replace) {
     replace('/teams');
   }
 }
-
-Velocity.RegisterEffect('slidePageIn', {
-  defaultDuration: 500,
-  calls: [
-    [ { translateX: [0, 'spring'] } ]
-  ]
-});
-
-Velocity.RegisterEffect('slidePageLeft', {
-  defaultDuration: 500,
-  calls: [
-    [ { translateX: ['-100%', 'spring'], opacity: 0 } ]
-  ]
-});
-
-Velocity.RegisterEffect('slidePageRight', {
-  defaultDuration: 500,
-  calls: [
-    [ { translateX: ['100%', 'spring'], opacity: 0 } ]
-  ]
-});
 
 const mapStateToProps = (state, ownProps) => {
   return {

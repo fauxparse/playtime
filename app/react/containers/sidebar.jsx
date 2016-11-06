@@ -92,25 +92,4 @@ function mapStateToProps(state) {
   };
 }
 
-Velocity.RegisterEffect('menuItemIn', {
-  defaultDuration: 500,
-  calls: [
-    [ { opacity: 1, translateY: 0 } ]
-  ]
-});
-
-Velocity.RegisterEffect('menuItemOutDown', {
-  defaultDuration: 500,
-  calls: [
-    [ { opacity: 0, translateY: '50%' } ]
-  ]
-});
-
-Velocity.RegisterEffect('menuItemOutUp', {
-  defaultDuration: 500,
-  calls: [
-    [ { opacity: 0, translateY: '-50%' } ]
-  ]
-});
-
 export default connect(mapStateToProps)(Sidebar);
