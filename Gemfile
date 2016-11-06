@@ -59,6 +59,7 @@ group :development, :staging do
 end
 
 group :test do
+  gem 'capybara-screenshot'
   gem 'capybara-webkit'
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
