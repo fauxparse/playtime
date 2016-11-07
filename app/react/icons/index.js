@@ -13,7 +13,9 @@ bullets.date = bullets.calendar;
 
 const buttons = {
   add: <svg className="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.996 10.154a1.852 1.852 0 0 0-1.846-1.846l-6.458.002V1.85A1.85 1.85 0 0 0 13.846.004L10.154 0a1.85 1.85 0 0 0-1.846 1.846v6.465H1.846A1.854 1.854 0 0 0 0 10.158l.004 3.688a1.85 1.85 0 0 0 1.846 1.846h6.458v6.462c0 1.015.832 1.846 1.846 1.846h3.692a1.85 1.85 0 0 0 1.846-1.846v-6.462h6.462A1.85 1.85 0 0 0 24 13.846l-.004-3.692z" fillRule="evenodd"/></svg>,
-  dropDown: <svg className="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>
+  dropDown: <svg className="icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>,
+  left: <svg className="icon" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M6.019 8l5.604-5.44a1.469 1.469 0 0 0 0-2.12 1.578 1.578 0 0 0-2.185 0L2.376 7.292a.982.982 0 0 0 0 1.414l7.062 6.853c.302.293.697.44 1.092.44.396 0 .791-.146 1.093-.44a1.469 1.469 0 0 0 0-2.12L6.02 8z" fillRule="evenodd"/></svg>,
+  right: <svg className="icon" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M6.638.44A1.563 1.563 0 0 0 5.545 0c-.395 0-.79.146-1.092.44a1.468 1.468 0 0 0 0 2.12L10.057 8l-5.604 5.44a1.468 1.468 0 0 0 0 2.12 1.578 1.578 0 0 0 2.185 0L13.7 8.707a.982.982 0 0 0 0-1.414L6.638.439z" fillRule="evenodd"/></svg>
 }
 
 const tabs = {

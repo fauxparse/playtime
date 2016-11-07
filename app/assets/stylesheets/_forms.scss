@@ -1,7 +1,7 @@
-.field.with-floating-label,
+.field,
 .select {
   position: relative;
-  padding: 2rem 0 .4375rem;
+  padding: 0 0 .4375rem;
 
   #{$all-text-inputs},
   .trigger {
@@ -15,6 +15,25 @@
     margin: 0;
     border-bottom: 1px solid $base-border-color;
   }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: .375rem;
+    left: 0;
+    right: 0;
+    transition: all $base-duration $base-timing;
+    transform: scaleX(0);
+    border-bottom: 2px solid $action-color;
+  }
+
+  &[data-focus="true"]::after {
+    transform: scaleX(1);
+  }
+}
+
+.field.with-floating-label {
+  padding-top: 2rem;
 
   label {
     position: absolute;
@@ -36,21 +55,6 @@
   &[data-focus="true"] label {
     color: $action-color;
   }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: .4375rem;
-    left: 0;
-    right: 0;
-    transition: all $base-duration $base-timing;
-    transform: scaleX(0);
-    border-bottom: 1px solid $action-color;
-  }
-
-  &[data-focus="true"]::after {
-    transform: scaleX(1);
-  }
 }
 
 .radio-button {
@@ -70,6 +74,22 @@
     flex: 1;
     margin-left: .5rem;
     padding: .5rem 0;
+    display: flex;
+    align-items: flex-start;
+
+    > :not(:first-child) {
+      margin-left: 1rem;
+    }
+
+    span {
+      line-height: $base-line-height;
+    }
+
+    .field, .select {
+      flex: 1;
+      margin-top: -.25rem;
+      margin-bottom: -.25rem;
+    }
   }
 
   svg {
@@ -148,6 +168,64 @@
   }
 }
 
+.date.select {
+  .menu {
+    padding: 0 0 .5rem;
+    left: 0;
+    top: 0;
+    margin: 0;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .5rem 0;
+    }
+
+    section {
+      margin: 0 auto;
+      width: 18.5rem;
+      padding: 0 .5rem .5rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      &[data-starts-on="1"] del { display: none; }
+      &[data-starts-on="2"] del { flex: 0 0 2.5rem; }
+      &[data-starts-on="3"] del { flex: 0 0 5rem; }
+      &[data-starts-on="4"] del { flex: 0 0 7.5rem; }
+      &[data-starts-on="5"] del { flex: 0 0 10rem; }
+      &[data-starts-on="6"] del { flex: 0 0 12.5rem; }
+      &[data-starts-on="7"] del { flex: 0 0 15rem; }
+
+      b, span {
+        display: block;
+        flex: 0 0 2.5rem;
+        font-size: $tiny-font-size;
+        line-height: 1rem;
+        text-align: center;
+      }
+
+      b {
+        font-weight: $base-font-weight;
+        color: $secondary-font-color;
+        margin-bottom: .5rem;
+      }
+
+      span {
+        padding: .75rem 0;
+        text-align: center;
+        border-radius: 50%;
+      }
+
+      [data-today="true"] { background-color: $oc-gray-3; }
+      [data-selected="true"] { background-color: $menu-hover-background-color; }
+    }
+  }
+}
+
 fieldset .row {
   display: flex;
   flex-direction: row;
@@ -158,5 +236,12 @@ fieldset .row {
   > * {
     flex: 1;
     &:not(:first-child) { margin-left: 1rem; }
+  }
+
+  > span {
+    @include ellipsis;
+    flex: 0 0 auto;
+    padding: .25rem auto;
+    margin-bottom: .5rem;
   }
 }
