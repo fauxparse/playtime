@@ -226,6 +226,47 @@
   }
 }
 
+.time.select {
+  .menu {
+    top: -3.25rem;
+    left: auto;
+    right: 0;
+    margin: 0;
+    padding: 0 .5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    div {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+    }
+
+    button {
+      @include size(2.5rem);
+      padding: .5rem;
+      background: none;
+      border-radius: 50%;
+      color: $secondary-font-color;
+      outline: none;
+    }
+
+    span {
+      text-align: center;
+      padding: .5rem 0;
+      font-size: 1.5rem;
+      font-feature-settings: 'tnum';
+    }
+
+    > span {
+      width: .5rem;
+      padding: 0;
+    }
+  }
+}
+
 fieldset .row {
   display: flex;
   flex-direction: row;
@@ -243,5 +284,11 @@ fieldset .row {
     flex: 0 0 auto;
     padding: .25rem auto;
     margin-bottom: .5rem;
+  }
+}
+
+#{$all-buttons} {
+  .icon {
+    path { fill: currentColor; }
   }
 }

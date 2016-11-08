@@ -196,4 +196,77 @@ class DateField extends Select {
   }
 }
 
-export { DateField, Field, RadioButtonField, Select }
+class TimeSpinner extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={(e) => this.increment(e, -1)}>{buttons.down}</button><span>{(this.props.format || this.format)(this.props.value)}</span><button onClick={(e) => this.increment(e)}>{buttons.up}</button>
+      </div>
+    )
+  }
+
+  format(value) {
+    return value.toString().padLeft(2, '0');
+  }
+
+  increment(e, amount = 1) {
+    const { min, max, value } = this.props, range = max - min + 1;
+    e.preventDefault();
+    this.props.onChange(e, (value - min + range + amount) % range + min);
+  }
+}
+
+class TimeField extends Select {
+  selected() {
+    return this.props.value;
+  }
+
+  showMenu(e) {
+    this.setState({ menu: true });
+  }
+
+  selectedText() {
+    const { format, value } = this.props;
+    return value && value.format(format || 'h:mm A');
+  }
+
+  menu() {
+    return (
+      <div className="menu">
+        <TimeSpinner value={this.props.value.hour()} min={0} max={23} format={n => (n % 12 || 12).toString().padLeft(2, '\u2007')} onChange={(e, value) => this.setHour(e, value)}/>
+        <span>:</span>
+        <TimeSpinner value={this.props.value.minute()} min={0} max={11} format={n => (n * 5).toString().padLeft(2, '0')} onChange={(e, value) => this.setMinute(e, value)}/>
+        <span/>
+        <TimeSpinner value={Math.floor(this.props.value.hour() / 12)} min={0} max={1} format={n => ['AM', 'PM'][n]} onChange={(e, value) => this.setAmpm(e, value)}/>
+      </div>
+    )
+  }
+
+  classNames() {
+    return super.classNames().concat(['time']);
+  }
+
+  setHour(e, value) {
+    var time = this.props.value.clone();
+    time.hour(value);
+    this.changed(e, time);
+  }
+
+  setMinute(e, value) {
+    var time = this.props.value.clone();
+    time.minute(value);
+    this.changed(e, time);
+  }
+
+  setAmpm(e, value) {
+    var time = this.props.value.clone();
+    time.hour(time.hour() % 12 + 12 * value);
+    this.changed(e, time);
+  }
+
+  changed(e, value) {
+    this.props.onChange(e, value, { name: this.props.name });
+  }
+}
+
+export { DateField, Field, RadioButtonField, Select, TimeField }
