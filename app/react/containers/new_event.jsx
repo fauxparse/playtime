@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import RWRRedux from 'rwr-redux';
 import { VelocityTransitionGroup } from 'velocity-react';
 import { bullets } from '../icons';
-import { Field, RadioButtonField, Select } from '../components/forms';
+import { DateField, Field, RadioButtonField, Select } from '../components/forms';
 
 class NewEvent extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class NewEvent extends Component {
         start: moment('2016-11-28'),
         repeat: { step: 1, interval: 'day' }
       },
-      page: 'repeat',
+      page: 'date',
       direction: 1,
       tabIndex: -1
     }
@@ -56,7 +56,12 @@ class NewEvent extends Component {
     const { event } = this.state;
     return (
       <fieldset key="date">
-        <Field label="Event name" name="event[name]" value={event.name} onChange={this.handleChange} />
+        <div className="row">
+          <Field label="Event name" name="event[name]" value={event.name} onChange={this.handleChange} />
+        </div>
+        <div className="row">
+          <DateField name="event[start]" value={event.start} onChange={this.handleChange} />
+        </div>
       </fieldset>
     )
   }
@@ -65,8 +70,8 @@ class NewEvent extends Component {
     const { event } = this.state;
     return (
       <fieldset key="repeat">
-        <RadioButtonField name="event[repeat]" value={false} checked={!event.repeat} onChange={this.handleChange}>Doesn’t repeat</RadioButtonField>
-        <RadioButtonField name="event[repeat]" value={{ step: 1, interval: 'week', weekdays: [event.start.day()] }} checked={!!event.repeat} onChange={this.handleChange}>Repeats every…</RadioButtonField>
+        <RadioButtonField name="event[repeat]" value={false} checked={!event.repeat} onChange={this.handleChange}>Once only</RadioButtonField>
+        <RadioButtonField name="event[repeat]" value={{ step: 1, interval: 'week', weekdays: [event.start.day()] }} checked={!!event.repeat} onChange={this.handleChange}>Repeat…</RadioButtonField>
         {this.repeatRules(event)}
         {this.repeatEnds(event)}
       </fieldset>
@@ -82,6 +87,7 @@ class NewEvent extends Component {
       return (
         <div className="repeat-rules">
           <div className="row">
+            <span>Every</span>
             <Field type="number" name="event[repeat][step]" value={repeat.step} onChange={this.handleChange} min="1"/>
             <Select name="event[repeat][interval]" options={intervals} value={repeat.interval} onChange={this.changeRepeatInterval.bind(this)}/>
           </div>
@@ -124,9 +130,9 @@ class NewEvent extends Component {
     if (event.repeat) {
       var end = event.end || event.start.clone().add(event.repeat.step, event.repeat.interval);
       return (
-        <div className="repeat-ends">
+        <div className="repeat-until">
           <RadioButtonField name="event[end]" value={false} checked={!event.end} onChange={this.handleChange}>Forever</RadioButtonField>
-          <RadioButtonField name="event[end]" value={end} checked={!!event.end} onChange={this.handleChange}>Until {end.format('D MMMM, YYYY')}</RadioButtonField>
+          <RadioButtonField name="event[end]" value={end} checked={!!event.end} onChange={this.handleChange}><span>Until</span><DateField name="event[end]" value={end} onChange={this.handleChange} /></RadioButtonField>
         </div>
       )
     }
@@ -173,7 +179,9 @@ class NewEvent extends Component {
   }
 
   changeRepeatInterval(e, value) {
-    var { event } = this.state, repeat = { interval: value, step: 1};
+    var { event } = this.state,
+        step = event.repeat ? event.repeat.step : 1,
+        repeat = { interval: value, step };
     if (!event.repeat || event.repeat.interval != value) {
       switch(value) {
         case 'day':

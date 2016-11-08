@@ -53,7 +53,7 @@
       }
 
       .field {
-        flex: 0 0 4rem;
+        flex: 0 0 3rem;
         input {
           text-align: center;
         }
@@ -98,6 +98,14 @@
         background-color: $action-color;
         color: $oc-white;
       }
+    }
+  }
+
+  .repeat-until {
+    .menu {
+      left: auto;
+      top: auto;
+      bottom: -2rem;
     }
   }
 }
