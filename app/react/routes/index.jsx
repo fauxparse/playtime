@@ -16,7 +16,7 @@ export default (
     <Route path="/teams/:team" component={Team}>
       <Route path="inbox" component={Inbox}/>
       <Route path="events" component={Events}>
-        <Route path="new" component={NewEvent}/>
+        <Route path="new" components={{modal: NewEvent}}/>
       </Route>
       <Route path="people" component={People}/>
       <Route path="stats" component={Stats}/>

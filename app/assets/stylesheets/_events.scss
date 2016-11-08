@@ -1,0 +1,103 @@
+.new-event form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    display: flex;
+    justify-content: center;
+
+    button {
+      background: none;
+      outline: none;
+      margin: 0;
+      padding: .75rem;
+      @include size(2.5rem);
+      color: $base-font-color;
+      opacity: .35;
+      transition: opacity $base-duration $base-timing;
+
+      &[data-active="true"] {
+        opacity: 1;
+      }
+
+      svg {
+        display: block;
+
+        path {
+          fill: currentColor;
+        }
+      }
+    }
+  }
+
+  > section {
+    flex: 1;
+    // overflow: hidden;
+    position: relative;
+  }
+
+  fieldset {
+    @include position(absolute, 0% null 0% 0%);
+    width: 100%;
+    // overflow-y: auto;
+    padding: 0 1rem 1rem;
+  }
+
+  .repeat-rules {
+    margin: $small-spacing 0 $small-spacing 3rem;
+
+    .row:first-child {
+      .field, .select {
+        padding-top: 0;
+      }
+
+      .field {
+        flex: 0 0 4rem;
+        input {
+          text-align: center;
+        }
+      }
+
+      .menu {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .weekdays {
+    span {
+      margin-right: 1rem;
+    }
+
+    button {
+      flex: 1 0 0;
+      margin: 0 0 0 -1px;
+      border: $base-border;
+      line-height: $base-line-height;
+      padding: .4375rem;
+      background: none;
+      color: $base-font-color;
+      font-weight: $base-font-weight;
+      border-radius: 0;
+      outline: none;
+
+      &:nth-of-type(2) {
+        @include border-left-radius($base-border-radius);
+        margin-left: 0;
+      }
+
+      &:first-of-type {
+        order: 1;
+        @include border-right-radius($base-border-radius);
+      }
+
+      &[data-selected="true"] {
+        position: relative;
+        border-color: $action-color;
+        background-color: $action-color;
+        color: $oc-white;
+      }
+    }
+  }
+}

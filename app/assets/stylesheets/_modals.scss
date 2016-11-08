@@ -1,0 +1,22 @@
+.modal-container {
+  @include position(fixed, 0% 0% 0% 0%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.modal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 2rem);
+  max-width: 32rem;
+  max-height: 36rem;
+  margin: 1rem;
+  background-color: $base-background-color;
+  border-radius: $base-border-radius;
+  box-shadow: 0 1px 1rem rgba(0, 0, 0, .15);
+  overflow: hidden;
+}

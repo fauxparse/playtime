@@ -1,0 +1,162 @@
+.field.with-floating-label,
+.select {
+  position: relative;
+  padding: 2rem 0 .4375rem;
+
+  #{$all-text-inputs},
+  .trigger {
+    background: none;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    box-shadow: none;
+    color: currentColor;
+    line-height: 1.5;
+    padding: .25rem 0;
+    margin: 0;
+    border-bottom: 1px solid $base-border-color;
+  }
+
+  label {
+    position: absolute;
+    left: 0;
+    top: 2.375rem;
+    line-height: 1.25em;
+    transition: all $base-duration $base-timing;
+    font-weight: $base-font-weight;
+    color: $secondary-font-color;
+  }
+
+  &[data-has-value="true"] label,
+  &[data-focus="true"] label {
+    top: 1rem;
+    line-height: 1rem;
+    font-size: $tiny-font-size;
+  }
+
+  &[data-focus="true"] label {
+    color: $action-color;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: .4375rem;
+    left: 0;
+    right: 0;
+    transition: all $base-duration $base-timing;
+    transform: scaleX(0);
+    border-bottom: 1px solid $action-color;
+  }
+
+  &[data-focus="true"]::after {
+    transform: scaleX(1);
+  }
+}
+
+.radio-button {
+  input {
+    display: none;
+  }
+
+  label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-weight: $base-font-weight;
+    margin: 0;
+  }
+
+  label > span {
+    flex: 1;
+    margin-left: .5rem;
+    padding: .5rem 0;
+  }
+
+  svg {
+    color: $secondary-font-color;
+  }
+
+  .ring {
+    stroke-width: 2px;
+    stroke: currentColor;
+    fill: none;
+    transition: all $base-duration $base-timing;
+  }
+
+  .dot {
+    fill: currentColor;
+    transform: scale(0);
+    transform-origin: 50% 50%;
+    transition: fill $base-duration $base-timing, transform $base-duration ease;
+  }
+
+  :checked ~ label svg {
+    .ring {
+      stroke: $action-color;
+    }
+
+    .dot {
+      transform: scale(1);
+      fill: $action-color;
+      transition: fill $base-duration $base-timing, transform $base-duration $ease-out-back;
+    }
+  }
+}
+
+.select {
+  .trigger {
+    display: flex;
+    cursor: pointer;
+
+    span {
+      @include ellipsis;
+      flex: 1;
+      padding-right: .5rem;
+    }
+
+    svg {
+      flex: 0 0 1.5rem;
+      fill: $secondary-font-color;
+    }
+  }
+
+  .shim {
+    content: "";
+    @include position(fixed, 0% 0% 0% 0%);
+  }
+
+  .menu {
+    @include position(absolute, null 0% null -1rem);
+    z-index: 100;
+    margin: 2rem 0 0;
+    padding: .5rem 0;
+    box-shadow: $base-shadow;
+    border-radius: $base-border-radius;
+    background: $base-background-color;
+
+    li {
+      @include ellipsis;
+      display: block;
+      line-height: $base-line-height;
+      padding: .5rem 1rem;
+      margin: 0;
+      cursor: pointer;
+
+      &[data-selected="true"] { background: $menu-selected-background-color; }
+      &:hover { background: $menu-hover-background-color; }
+    }
+  }
+}
+
+fieldset .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: center;
+  margin-bottom: $small-spacing;
+
+  > * {
+    flex: 1;
+    &:not(:first-child) { margin-left: 1rem; }
+  }
+}

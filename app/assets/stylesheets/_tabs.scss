@@ -63,8 +63,8 @@ section.tabbed {
         }
 
         ~ .circle {
-          transform: scale(100);
-          transition-duration: 2s;
+          transform: scale(60);
+          transition-duration: 1s;
         }
       }
 
@@ -112,5 +112,9 @@ section.tabbed {
 
     a:nth-child(3) { margin-right: 2rem; }
     a:nth-child(4) { margin-left: 2rem; }
+  }
+
+  .modal-container {
+    bottom: 4.5rem;
   }
 }
