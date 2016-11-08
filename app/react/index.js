@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import 'element-closest';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';

@@ -2,7 +2,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: ['./app/react/index.js']
+    main: ['babel-polyfill', './app/react/index.js']
   },
   output: {
     path: __dirname + '/app/assets/javascripts',
