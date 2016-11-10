@@ -4,6 +4,7 @@ class Team < ApplicationRecord
   sluggable
 
   has_many :members, -> { includes :user }
+  has_many :events
 
   validates :name, :slug, presence: true
 

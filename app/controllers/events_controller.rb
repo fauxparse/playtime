@@ -4,5 +4,8 @@ class EventsController < ApplicationController
   end
 
   def new
+    respond_to do |format|
+      format.json { render json: current_team.events.new }
+    end
   end
 end

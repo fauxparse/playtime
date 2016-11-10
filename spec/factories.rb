@@ -45,5 +45,18 @@ FactoryGirl.define do
         end
       end
     end
+
+    trait :terminating do
+      schedule do
+        IceCube::Schedule.new(
+          Time.zone.local(2016, 10, 21, 21),
+          duration: 1.hour
+        ).tap do |schedule|
+          schedule.add_recurrence_rule(
+            IceCube::Rule.weekly.day(:friday).count(6)
+          )
+        end
+      end
+    end
   end
 end
