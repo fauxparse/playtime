@@ -142,6 +142,9 @@ GEM
       shellany (~> 0.0)
       thor (>= 0.18.1)
     guard-compat (1.2.1)
+    guard-ctags-bundler (1.4.0)
+      guard (>= 2.0)
+      guard-compat (>= 0.1.0)
     guard-rails (0.8.0)
       guard (~> 2.11)
       guard-compat (~> 1.0)
@@ -157,6 +160,11 @@ GEM
     honeybadger (2.7.0)
     htmlentities (4.3.4)
     i18n (0.7.0)
+    ice_cube (0.14.0)
+    jquery-rails (4.2.1)
+      rails-dom-testing (>= 1, < 3)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     json (1.8.3)
     jsonapi (0.1.1.beta2)
       json (~> 1.8)
@@ -384,11 +392,14 @@ DEPENDENCIES
   flutie
   formulaic
   guard
+  guard-ctags-bundler
   guard-rails
   guard-rspec
   guard-rubocop
   high_voltage
   honeybadger
+  ice_cube
+  jquery-rails
   launchy
   listen
   moment_timezone-rails

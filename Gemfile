@@ -12,6 +12,8 @@ gem 'cry'
 gem 'delayed_job_active_record'
 gem 'flutie'
 gem 'honeybadger'
+gem 'ice_cube'
+gem 'jquery-rails'
 gem 'momentjs-rails'
 gem 'moment_timezone-rails'
 gem 'normalize-rails', '~> 3.0.0'
@@ -36,6 +38,7 @@ group :development do
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
+  gem 'guard-ctags-bundler', require: false
   gem 'listen'
   gem 'spring'
   gem 'spring-commands-rspec'
