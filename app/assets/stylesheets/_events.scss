@@ -33,15 +33,18 @@
 
   > section {
     flex: 1;
-    // overflow: hidden;
     position: relative;
   }
 
   fieldset {
     @include position(absolute, 0% null 0% 0%);
     width: 100%;
-    // overflow-y: auto;
     padding: 0 1rem 1rem;
+  }
+
+  .row .time:first-child .menu {
+    left: 0;
+    right: auto;
   }
 
   .repeat-rules {

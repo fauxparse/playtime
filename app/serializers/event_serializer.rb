@@ -15,15 +15,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def repeat
-    case rule
-    when nil then false
-    when IceCube::WeeklyRule
-      {
-        interval: 'week',
-        step: rule.interval,
-        until: rule.until_time.end_of_day
-      }
-    end
+    rule.present? && RecurrenceRuleSerializer.new(rule, schedule: schedule)
   end
 
   private
@@ -33,6 +25,6 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def rule
-    schedule.recurrence_rules.first
+    @rule ||= schedule.recurrence_rules.first
   end
 end
