@@ -25,11 +25,12 @@ class EventForm
 
   def sanitize(params)
     return {} if params.blank? || params[:event].blank?
+    repeating = params[:event][:repeat].to_s != 'false'
     params
       .require(:event)
       .permit(
         :name, :start, :end,
-        params[:event][:repeat] ? { repeat: REPEAT_PARAMETERS } : :repeat
+        repeating ? { repeat: REPEAT_PARAMETERS } : :repeat
       )
   end
 
@@ -38,7 +39,7 @@ class EventForm
     schedule_with_repeat(
       time_zone.parse(params[:start]),
       time_zone.parse(params[:end]),
-      params[:repeat]
+      params[:repeat].to_s == 'false' ? false : params[:repeat]
     )
   end
 

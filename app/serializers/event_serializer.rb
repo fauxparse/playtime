@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class EventSerializer < ActiveModel::Serializer
   attributes :id, :name, :start, :end, :repeat
+  attribute :errors, if: :errors?
 
   def id
     object.to_param
@@ -16,6 +17,10 @@ class EventSerializer < ActiveModel::Serializer
 
   def repeat
     rule.present? && RecurrenceRuleSerializer.new(rule, schedule: schedule)
+  end
+
+  def errors?
+    object.errors.any?
   end
 
   private

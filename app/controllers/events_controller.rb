@@ -14,4 +14,14 @@ class EventsController < ApplicationController
       end
     end
   end
+
+  def create
+    respond_to do |format|
+      form = EventForm.new(current_team.events.new, params)
+      format.json do
+        status = form.save ? :ok : :not_acceptable
+        render json: form.event, status: status
+      end
+    end
+  end
 end
