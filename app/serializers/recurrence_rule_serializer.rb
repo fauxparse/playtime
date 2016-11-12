@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RecurrenceRuleSerializer < ActiveModel::Serializer
   attributes :interval, :step, :until
   attribute :weekdays, if: :weekly?
@@ -5,7 +6,10 @@ class RecurrenceRuleSerializer < ActiveModel::Serializer
   attribute :week_of_month, if: :monthly_by_week_of_month?
 
   def interval
-    object.class.name.demodulize.underscore.sub(/ly_rule$/, '')
+    object
+      .class.name.demodulize.underscore
+      .sub(/ly_rule$/, '')
+      .sub(/i$/, 'y')
   end
 
   def step
