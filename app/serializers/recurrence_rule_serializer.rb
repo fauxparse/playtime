@@ -27,15 +27,11 @@ class RecurrenceRuleSerializer < ActiveModel::Serializer
   end
 
   def day_of_month
-    validations[:day_of_month].first.day
+    schedule.start_time.day
   end
 
   def week_of_month
     validations[:day_of_week].first.occ
-  end
-
-  def daily?
-    object.is_a?(IceCube::DailyRule)
   end
 
   def weekly?
@@ -47,15 +43,11 @@ class RecurrenceRuleSerializer < ActiveModel::Serializer
   end
 
   def monthly_by_day_of_month?
-    monthly? && validations[:day_of_month].present?
+    monthly? && !monthly_by_week_of_month?
   end
 
   def monthly_by_week_of_month?
     monthly? && validations[:day_of_week].present?
-  end
-
-  def yearly?
-    object.is_a?(IceCube::YearlyRule)
   end
 
   private

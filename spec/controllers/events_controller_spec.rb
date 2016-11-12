@@ -9,6 +9,14 @@ RSpec.describe EventsController, type: :controller do
   let(:team_id) { team.to_param }
   let(:json) { JSON.parse(response.body).deep_symbolize_keys }
 
+  describe '#new' do
+    before { get :new, params: { team_id: team_id }, format: :json }
+
+    it 'returns a new event as JSON' do
+      expect(json).to include(:name, :start, :end, :repeat)
+    end
+  end
+
   describe '#create' do
     def post_create
       post(

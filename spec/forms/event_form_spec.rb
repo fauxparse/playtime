@@ -69,11 +69,7 @@ describe EventForm do
         name: 'Bug Hunt',
         start: '2016-10-21T21:00:00+13:00',
         end: '2016-10-21T22:00:00+13:00',
-        repeat: {
-          interval: 'month',
-          step: 2,
-          week_of_month: -1
-        }
+        repeat: repeat
       }
     end
 
@@ -81,16 +77,83 @@ describe EventForm do
       {
         start_time: { time: '2016-10-21T08:00:00Z', zone: 'Wellington' },
         end_time: { time: '2016-10-21T09:00:00Z', zone: 'Wellington' },
-        rrules: [
-          {
-            validations: { day_of_week: { 5 => [-1] } },
-            rule_type: 'IceCube::MonthlyRule',
-            interval: 2
-          }
-        ]
+        rrules: [repeat_json]
       }
     end
 
-    it_behaves_like 'a valid form'
+    context 'for a daily event' do
+      let(:repeat) { { interval: 'day' } }
+      let(:repeat_json) do
+        {
+          validations: {},
+          rule_type: 'IceCube::DailyRule',
+          interval: 1
+        }
+      end
+
+      it_behaves_like 'a valid form'
+    end
+
+    context 'for a weekly event' do
+      let(:repeat) { { interval: 'week', weekdays: [5, 6] } }
+      let(:repeat_json) do
+        {
+          validations: { day: [5, 6] },
+          rule_type: 'IceCube::WeeklyRule',
+          interval: 1,
+          week_start: 0
+        }
+      end
+
+      it_behaves_like 'a valid form'
+    end
+
+    context 'for the 21st of every second month' do
+      let(:repeat) { { interval: 'month' } }
+
+      let(:repeat_json) do
+        {
+          validations: { day_of_month: [21] },
+          rule_type: 'IceCube::MonthlyRule',
+          interval: 1
+        }
+      end
+
+      it_behaves_like 'a valid form'
+    end
+
+    context 'for the last Friday of every second month' do
+      let(:repeat) do
+        {
+          interval: 'month',
+          step: 2,
+          week_of_month: -1
+        }
+      end
+
+      let(:repeat_json) do
+        {
+          validations: { day_of_week: { 5 => [-1] } },
+          rule_type: 'IceCube::MonthlyRule',
+          interval: 2
+        }
+      end
+
+      it_behaves_like 'a valid form'
+    end
+
+    context 'for the 21st of October every year' do
+      let(:repeat) { { interval: 'year' } }
+
+      let(:repeat_json) do
+        {
+          validations: {},
+          rule_type: 'IceCube::YearlyRule',
+          interval: 1
+        }
+      end
+
+      it_behaves_like 'a valid form'
+    end
   end
 end

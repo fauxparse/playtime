@@ -12,5 +12,9 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe SerializationHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'uses the correct serializer' do
+    event = create(:event)
+    expect(EventSerializer).to receive(:new).with(event, {}).and_call_original
+    helper.serialize(event)
+  end
 end

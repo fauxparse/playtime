@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def current_member
     @current_member ||=
       current_user.members.where(team_id: team_id).first ||
-      Member.new(user: user)
+      Member.new(user: current_user)
   end
 
   def team_id
