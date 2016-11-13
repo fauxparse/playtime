@@ -6,7 +6,7 @@ describe RecurrenceRuleSerializer do
   let(:options) { { schedule: schedule } }
   let(:json) { serializer.as_json }
   let(:schedule) do
-    IceCube::Schedule.new(Time.now, end_time: 1.hour.from_now) do |s|
+    IceCube::Schedule.new(Time.zone.now, end_time: 1.hour.from_now) do |s|
       s.add_recurrence_rule(rule)
     end
   end

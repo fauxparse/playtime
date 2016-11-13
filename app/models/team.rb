@@ -8,6 +8,8 @@ class Team < ApplicationRecord
 
   validates :name, :slug, presence: true
 
+  scope :from_param, ->(param) { where(slug: param) }
+
   def to_s
     name
   end
