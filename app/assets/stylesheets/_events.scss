@@ -31,12 +31,12 @@
     }
   }
 
-  > section {
+  > fieldset {
     flex: 1;
     position: relative;
   }
 
-  fieldset {
+  .page {
     @include position(absolute, 0% null 0% 0%);
     width: 100%;
     padding: 0 1rem 1rem;
@@ -123,14 +123,114 @@
     align-items: center;
     background: none;
     padding: .5rem;
-    color: $accent-color;
+    color: $action-color;
 
     svg {
       @include size(2rem);
     }
+  }
+}
 
-    path {
-      fill: currentColor;
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  20% { transform: scale(1.2); }
+}
+
+@keyframes show-face {
+  0% { transform: scale(1); }
+  100% { transform: scale(3); }
+}
+
+@keyframes hide-face {
+  0% { transform: scale(3); }
+  100% { transform: scale(0); }
+}
+
+@keyframes show-expression {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+button.save {
+  outline: none;
+
+  .check, circle {
+    fill: currentColor;
+  }
+
+  .check {
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: transform .25s $ease-out-back;
+    transition-delay: .25s;
+  }
+
+  .dot {
+    transform-origin: 50% 50%;
+    transform: scale(0);
+    transition: transform .25s $ease-out-back;
+    transition-delay: .25s;
+  }
+
+  .face {
+    transform-origin: 50% 50%;
+    transform: scale(0);
+  }
+
+  .center {
+    transition-delay: .375s;
+  }
+
+  .right {
+    transition-delay: .5s;
+  }
+
+  .happy, .sad {
+    fill: $oc-white;
+    opacity: 0;
+  }
+
+  &.saving {
+    .check {
+      transform: scale(0);
+      transition-timing-function: $ease-in-back;
+      transition-delay: 0s;
     }
+
+    .dot {
+      transform: scale(1);
+      animation: pulse 1s ease infinite;
+    }
+
+    .left {
+      animation-delay: 1.25s;
+    }
+
+    .center {
+      animation-delay: 1.375s;
+    }
+
+    .right {
+      animation-delay: 1.5s;
+    }
+  }
+
+  &.error, &.success {
+    .dot {
+      transform: scale(0);
+      transition-delay: 0;
+    }
+
+    .face {
+      animation: show-face .25s $ease-out-back forwards, hide-face .25s $ease-in-back .75s forwards;
+    }
+
+    .check {
+      transition-delay: 1s;
+    }
+  }
+
+  &.error .sad, &.success .happy {
+    animation: show-expression .25s ease alternate forwards;
   }
 }

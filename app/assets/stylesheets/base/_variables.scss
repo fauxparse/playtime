@@ -28,8 +28,8 @@ $base-z-index: 0;
 // Font Colors
 $base-font-color: $oc-gray-9;
 $secondary-font-color: $oc-gray-6;
-$action-color: $oc-grape-7;
-$accent-color: $oc-orange-7;
+$action-color: $oc-yellow-7;
+$accent-color: $oc-yellow-5;
 
 // Border
 $base-border-color: $oc-gray-3;
@@ -47,7 +47,7 @@ $form-box-shadow: inset 0 1px 3px rgba($oc-gray-9, 0.06);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
 
 $menu-selected-background-color: $oc-gray-3;
-$menu-hover-background-color: $oc-blue-3;
+$menu-hover-background-color: $oc-yellow-5;
 
 // Animations
 $base-duration: 250ms;

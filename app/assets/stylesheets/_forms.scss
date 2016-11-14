@@ -1,3 +1,10 @@
+@mixin disabled-field {
+  color: $secondary-font-color;
+  border-width: 0 0 1px;
+  border-bottom-style: dotted;
+  pointer-events: none;
+}
+
 .field,
 .select {
   position: relative;
@@ -14,6 +21,10 @@
     padding: .25rem 0;
     margin: 0;
     border-bottom: 1px solid $base-border-color;
+
+    &:disabled {
+      @include disabled-field;
+    }
   }
 
   &::after {
@@ -29,6 +40,19 @@
 
   &[data-focus="true"]::after {
     transform: scaleX(1);
+  }
+}
+
+fieldset:disabled {
+  opacity: .5;
+  transition: opacity $base-duration $base-timing;
+
+  .field,
+  .select {
+    #{$all-text-inputs},
+    .trigger {
+      @include disabled-field;
+    }
   }
 }
 

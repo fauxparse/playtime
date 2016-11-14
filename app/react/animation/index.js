@@ -50,6 +50,6 @@ Velocity.RegisterEffect('modalShow', {
 Velocity.RegisterEffect('modalHide', {
   defaultDuration: 250,
   calls: [
-    [ { translateY: '100vh' } ]
+    [ { translateY: ['100vh', [0.6, -0.28, 0.735, 0.045]] } ]
   ]
 });

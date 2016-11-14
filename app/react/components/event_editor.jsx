@@ -23,7 +23,7 @@ class EventEditor extends Component {
         <header>
           {this.pages().map((page, index) => <button key={`${page}-button`} data-active={this.state.page == page} onClick={(e) => this.tabClicked(e, page, index)}>{bullets[page]}</button>)}
         </header>
-        <VelocityTransitionGroup component="section" {...this.pageAnimation()}>
+        <VelocityTransitionGroup component="fieldset" disabled={this.props.disabled} {...this.pageAnimation()}>
           {this[`${page}Fields`]()}
         </VelocityTransitionGroup>
       </form>
@@ -48,7 +48,7 @@ class EventEditor extends Component {
   dateFields() {
     const { event } = this.props;
     return (
-      <fieldset key="date">
+      <fieldset className="page" key="date">
         <div className="row">
           <Field label="Event name" name="event[name]" value={event.name} onChange={this.change} />
         </div>
@@ -67,7 +67,7 @@ class EventEditor extends Component {
   repeatFields() {
     const { event } = this.props;
     return (
-      <fieldset key="repeat">
+      <fieldset className="page" key="repeat">
         <RadioButtonField name="event[repeat]" value={false} checked={!event.repeat} onChange={this.change}>Once only</RadioButtonField>
         <RadioButtonField name="event[repeat]" value={{ step: 1, interval: 'week', weekdays: [event.start.day()] }} checked={!!event.repeat} onChange={this.change}>Repeat…</RadioButtonField>
         {this.repeatRules(event)}

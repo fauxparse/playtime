@@ -9,7 +9,7 @@ import fetch from '../fetch';
 class NewEvent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { saving: 0 };
     fetch(props.location.pathname)
       .then(response => response.json())
       .then(json => this.eventChanged(json));
@@ -20,13 +20,23 @@ class NewEvent extends Component {
     return (
       <div className="new-event modal-container">
         <div className="modal">
-          {event && <EventEditor event={event} onChange={this.eventChanged.bind(this)} />}
+          {event && <EventEditor event={event} disabled={this.state.saving % 2 === 1} onChange={this.eventChanged.bind(this)} />}
           <footer>
-            <button>{buttons.check}</button>
+            <button className={this.saveClass()} onClick={() => this.setState({ saving: (this.state.saving + 1) % 5 })}>{buttons.save}</button>
           </footer>
         </div>
       </div>
     );
+  }
+
+  saveClass() {
+    return [
+      'save',
+      'save saving',
+      'save error',
+      'save saving',
+      'save success'
+    ][this.state.saving];
   }
 
   eventChanged(event) {
