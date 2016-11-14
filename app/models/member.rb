@@ -11,6 +11,8 @@ class Member < ApplicationRecord
     if: :user_id?
   validates :admin, absence: true, unless: :user_id?
 
+  scope :with_team_id, ->(param) { joins(:team).merge(Team.from_param(param)) }
+
   def to_s
     name
   end

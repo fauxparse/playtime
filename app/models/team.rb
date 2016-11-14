@@ -4,8 +4,11 @@ class Team < ApplicationRecord
   sluggable
 
   has_many :members, -> { includes :user }
+  has_many :events
 
   validates :name, :slug, presence: true
+
+  scope :from_param, ->(param) { where(slug: param) }
 
   def to_s
     name

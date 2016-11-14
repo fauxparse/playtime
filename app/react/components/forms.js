@@ -235,7 +235,7 @@ class TimeField extends Select {
       <div className="menu">
         <TimeSpinner value={this.props.value.hour()} min={0} max={23} format={n => (n % 12 || 12).toString().padLeft(2, '\u2007')} onChange={(e, value) => this.setHour(e, value)}/>
         <span>:</span>
-        <TimeSpinner value={this.props.value.minute()} min={0} max={11} format={n => (n * 5).toString().padLeft(2, '0')} onChange={(e, value) => this.setMinute(e, value)}/>
+        <TimeSpinner value={Math.floor(this.props.value.minute() / 5)} min={0} max={11} format={n => (n * 5).toString().padLeft(2, '0')} onChange={(e, value) => this.setMinute(e, value * 5)}/>
         <span/>
         <TimeSpinner value={Math.floor(this.props.value.hour() / 12)} min={0} max={1} format={n => ['AM', 'PM'][n]} onChange={(e, value) => this.setAmpm(e, value)}/>
       </div>
