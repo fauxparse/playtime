@@ -106,6 +106,8 @@ GEM
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    domain_name (0.5.20161021)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
@@ -159,6 +161,8 @@ GEM
     high_voltage (3.0.0)
     honeybadger (2.7.0)
     htmlentities (4.3.4)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (0.7.0)
     ice_cube (0.14.0)
     jquery-rails (4.2.1)
@@ -192,6 +196,7 @@ GEM
       sass (>= 3.3)
       thor (~> 0.19)
     nenv (0.3.0)
+    netrc (0.11.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -260,6 +265,10 @@ GEM
     recipient_interceptor (0.1.2)
       mail
     refills (0.2.0)
+    rest-client (2.0.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -350,6 +359,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.3)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
     unicode-display_width (1.1.1)
     uniform_notifier (1.10.0)
     vanilla-ujs (1.2.0)
@@ -419,6 +431,7 @@ DEPENDENCIES
   react_webpack_rails
   recipient_interceptor
   refills
+  rest-client
   rspec-collection_matchers
   rspec-rails (~> 3.5.0.beta4)
   rubocop
