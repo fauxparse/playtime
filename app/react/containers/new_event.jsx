@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RWRRedux from 'rwr-redux';
 import { VelocityTransitionGroup } from 'velocity-react';
+import { buttons } from '../icons';
 import EventEditor from '../components/event_editor';
 import fetch from '../fetch';
 
@@ -20,6 +21,9 @@ class NewEvent extends Component {
       <div className="new-event modal-container">
         <div className="modal">
           {event && <EventEditor event={event} onChange={this.eventChanged.bind(this)} />}
+          <footer>
+            <button>{buttons.check}</button>
+          </footer>
         </div>
       </div>
     );
