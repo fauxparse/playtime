@@ -27,10 +27,24 @@
     }
   }
 
+  &[data-has-errors="true"],
+  &.with-floating-label[data-has-errors="true"],
+  &.with-floating-label[data-has-errors="true"][data-focus="true"] {
+    label {
+      color: $error-color;
+    }
+
+    #{$all-text-inputs},
+    .trigger,
+    &::after {
+      border-bottom-color: $error-color;
+    }
+  }
+
   &::after {
     content: "";
     position: absolute;
-    bottom: .375rem;
+    top: calc(.5rem + 1.5em);
     left: 0;
     right: 0;
     transition: all $base-duration $base-timing;
@@ -40,6 +54,13 @@
 
   &[data-focus="true"]::after {
     transform: scaleX(1);
+  }
+
+  .error {
+    font-size: $tiny-font-size;
+    margin: .5rem 0 0;
+    line-height: $base-line-height;
+    color: $error-color;
   }
 }
 
@@ -58,6 +79,10 @@ fieldset:disabled {
 
 .field.with-floating-label {
   padding-top: 2rem;
+
+  &::after {
+    margin-top: 2rem;
+  }
 
   label {
     position: absolute;
@@ -315,4 +340,11 @@ fieldset .row {
   .icon {
     path { fill: currentColor; }
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 0s ease-in-out 10000s;
 }

@@ -47,10 +47,11 @@ class EventEditor extends Component {
 
   dateFields() {
     const { event } = this.props;
+    const errors = event.errors || {};
     return (
       <fieldset className="page" key="date">
         <div className="row">
-          <Field label="Event name" name="event[name]" value={event.name} onChange={this.change} />
+          <Field label="Event name" name="event[name]" errors={errors.name} value={event.name} onChange={this.change} autoFocus={true} />
         </div>
         <div className="row">
           <DateField name="event[start]" value={event.start} onChange={this.changeStartDate.bind(this)} />
@@ -69,7 +70,7 @@ class EventEditor extends Component {
     return (
       <fieldset className="page" key="repeat">
         <RadioButtonField name="event[repeat]" value={false} checked={!event.repeat} onChange={this.change}>Once only</RadioButtonField>
-        <RadioButtonField name="event[repeat]" value={{ step: 1, interval: 'week', weekdays: [event.start.day()] }} checked={!!event.repeat} onChange={this.change}>Repeat…</RadioButtonField>
+        <RadioButtonField name="event[repeat]" value={{ step: 1, interval: 'week', weekdays: [event.start.day()], until: false }} checked={!!event.repeat} onChange={this.change}>Repeat…</RadioButtonField>
         {this.repeatRules(event)}
         {this.repeatEnds(event)}
       </fieldset>
@@ -126,11 +127,13 @@ class EventEditor extends Component {
 
   repeatEnds(event) {
     if (event.repeat) {
-      var end = event.repeat.until || event.start.clone().add(event.repeat.step, event.repeat.interval);
+      const { until, step, interval } = event.repeat,
+            defaultUntil = until || event.start.clone().add(step, interval);
+
       return (
         <div className="repeat-until">
-          <RadioButtonField name="event[repeat][end]" value={false} checked={!event.end} onChange={this.change}>Forever</RadioButtonField>
-          <RadioButtonField name="event[repeat][end]" value={end} checked={!!event.end} onChange={this.change}><span>Until</span><DateField name="event[repeat][end]" value={end} onChange={this.change} /></RadioButtonField>
+          <RadioButtonField name="event[repeat][until]" value={false} checked={until === false} onChange={this.change}>Forever</RadioButtonField>
+          <RadioButtonField name="event[repeat][until]" value={defaultUntil} checked={until !== false} onChange={this.change}><span>Until</span><DateField name="event[repeat][until]" value={defaultUntil} onChange={this.change} /></RadioButtonField>
         </div>
       )
     }
@@ -213,7 +216,7 @@ class EventEditor extends Component {
   changeRepeatInterval(e, value) {
     var { event } = this.props,
         step = event.repeat ? event.repeat.step : 1,
-        repeat = { interval: value, step };
+        repeat = { interval: value, step, until: false };
     if (!event.repeat || event.repeat.interval != value) {
       switch(value) {
         case 'day':

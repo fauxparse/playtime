@@ -20,13 +20,39 @@ class NewEvent extends Component {
     return (
       <div className="new-event modal-container">
         <div className="modal">
-          {event && <EventEditor event={event} disabled={this.state.saving % 2 === 1} onChange={this.eventChanged.bind(this)} />}
+          {event && <EventEditor event={event} disabled={this.state.saveState == 'saving'} onChange={this.eventChanged.bind(this)} />}
           <footer>
-            <button className={this.saveClass()} onClick={() => this.setState({ saving: (this.state.saving + 1) % 5 })}>{buttons.save}</button>
+            <button rel="save" data-state={this.state.saveState} onClick={() => this.save()}>{buttons.save}</button>
           </footer>
         </div>
       </div>
     );
+  }
+
+  save() {
+    var json = Object.assign({}, this.state.event),
+        timeout = new Promise((resolve, reject) => setTimeout(resolve, 1500)),
+        status;
+
+    delete json.id;
+    delete json.errors;
+
+    this.setState({ saveState: 'saving' })
+    var loader = fetch(`/teams/${this.props.params.team}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(json)
+    })
+    .then((response) => {
+      this.setState({ responseStatus: response.status });
+      return response.json()
+    });
+
+    Promise.all([loader, timeout])
+      .then(([json, _]) => {
+        this.setState({ saveState: this.state.responseStatus > 400 ? 'error' : 'success' });
+        this.eventChanged(json);
+      });
   }
 
   saveClass() {
@@ -41,20 +67,22 @@ class NewEvent extends Component {
 
   eventChanged(event) {
     if (event) {
-      if (!event.name) {
-        event.name = '';
-      }
-      if (event.start && !moment.isMoment(event.start)) {
-        event.start = moment(event.start);
-      }
-      if (event.end && !moment.isMoment(event.end)) {
-        event.end = moment(event.end);
-      }
-      if (event.repeat && event.repeat.until && !moment.isMoment(event.repeat.until)) {
-        event.repeat.until = moment(event.repeat.until);
+      event.name = event.name || '';
+      event.start = this.parseMoment(event.start);
+      event.end = this.parseMoment(event.end);
+      if (event.repeat && event.repeat.until) {
+        event.repeat.until = this.parseMoment(event.repeat.until);
       }
     }
     this.setState({ event });
+  }
+
+  parseMoment(time) {
+    if (time && !moment.isMoment(time)) {
+      return moment(time);
+    } else {
+      return time;
+    }
   }
 }
 

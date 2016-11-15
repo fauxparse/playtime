@@ -7,7 +7,6 @@ class Events extends Component {
     const { children, location } = this.props;
     return (
       <section>
-        <h1>Events</h1>
         {children}
       </section>
     );

@@ -23,6 +23,10 @@ class EventSerializer < ActiveModel::Serializer
     object.errors.any?
   end
 
+  def errors
+    object.errors.to_hash(true)
+  end
+
   private
 
   def schedule

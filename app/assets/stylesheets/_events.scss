@@ -151,7 +151,7 @@
   100% { opacity: 1; }
 }
 
-button.save {
+button[rel="save"] {
   outline: none;
 
   .check, circle {
@@ -190,7 +190,7 @@ button.save {
     opacity: 0;
   }
 
-  &.saving {
+  &[data-state="saving"] {
     .check {
       transform: scale(0);
       transition-timing-function: $ease-in-back;
@@ -215,10 +215,10 @@ button.save {
     }
   }
 
-  &.error, &.success {
+  &[data-state="error"], &[data-state="success"] {
     .dot {
       transform: scale(0);
-      transition-delay: 0;
+      transition-delay: 0s;
     }
 
     .face {
@@ -230,7 +230,7 @@ button.save {
     }
   }
 
-  &.error .sad, &.success .happy {
+  &[data-state="error"] .sad, &[data-state="success"] .happy {
     animation: show-expression .25s ease alternate forwards;
   }
 }

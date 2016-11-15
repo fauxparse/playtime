@@ -41,15 +41,15 @@ Velocity.RegisterEffect('menuItemOutUp', {
 });
 
 Velocity.RegisterEffect('modalShow', {
-  defaultDuration: 250,
+  defaultDuration: 500,
   calls: [
-    [ { translateY: [0, [0.175, 0.885, 0.32, 1.275]] } ]
+    [ { opacity: 1, translateY: [0, [0, 0.25, 0.35, 1.2]] } ]
   ]
 });
 
 Velocity.RegisterEffect('modalHide', {
-  defaultDuration: 250,
+  defaultDuration: 500,
   calls: [
-    [ { translateY: ['100vh', [0.6, -0.28, 0.735, 0.045]] } ]
+    [ { opacity: 0, translateY: ['100vh', [0.65, -0.2, 1, 0.75]] } ]
   ]
 });
