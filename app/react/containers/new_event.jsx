@@ -20,7 +20,7 @@ class NewEvent extends Component {
     return (
       <div className="new-event modal-container">
         <div className="modal">
-          {event && <EventEditor event={event} disabled={this.state.saveState == 'saving'} onChange={this.eventChanged.bind(this)} />}
+          {event && <EventEditor event={event} disabled={this.state.saveState === 'saving'} onChange={this.eventChanged.bind(this)} />}
           <footer>
             <button rel="save" data-state={this.state.saveState} onClick={() => this.save()}>{buttons.save}</button>
           </footer>
