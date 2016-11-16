@@ -25,7 +25,7 @@ class Field extends Component {
     return (
       <div className={classNames('field', this.props.className, this.props.label && 'with-floating-label')} data-has-value={!!value || (value === 0)} data-has-errors={!!this.props.errors} data-focus={this.state.focus}>
         {label && <label htmlFor={id}>{label}</label>}
-        <input {...attrs} onChange={this.onChange.bind(this)} onFocus={this.onFocus.bind(this)} onBlur={this.onBlur.bind(this)}/>
+        <input {...attrs} onChange={this.onChange.bind(this)} onFocus={this.onFocus.bind(this, true)} onBlur={this.onFocus.bind(this, false)}/>
         {this.errors()}
       </div>
     );
@@ -35,14 +35,10 @@ class Field extends Component {
     return (this.props.errors || []).map((msg, i) => <p key={i} className="error">{msg}</p>)
   }
 
-  onFocus(e) {
-    this.setState({ focus: true });
-    if (this.props.onFocus) this.props.onFocus(e);
-  }
-
-  onBlur(e) {
-    this.setState({ focus: false });
-    if (this.props.onBlur) this.props.onBlur(e);
+  onFocus(focus, e) {
+    const callback = this.props[['onBlur', 'onFocus'][+focus]];
+    this.setState({ focus: focus });
+    if (callback) callback(e);
   }
 
   onChange(e) {
