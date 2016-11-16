@@ -45,7 +45,7 @@ class Team extends Component {
           </div>
           {TABS.map(Tab)}
         </footer>
-        <VelocityTransitionGroup enter={{animation: 'modalShow', delay: 250}} leave={{animation: 'modalHide'}} runOnMount={true}>
+        <VelocityTransitionGroup enter={{animation: 'modalShow', delay: 250, style: { opacity: 0 }}} leave={{animation: 'modalHide'}} runOnMount={true}>
           {children.props && children.props.modal}
         </VelocityTransitionGroup>
       </section>
@@ -96,8 +96,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    closePopup: () => dispatch(push(`/teams/${ownProps.params.team}/events`))
-  }
+  return { }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

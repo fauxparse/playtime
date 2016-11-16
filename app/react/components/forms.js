@@ -18,13 +18,19 @@ class Field extends Component {
     delete attrs.label;
     delete attrs.onChange;
     delete attrs.children;
+    delete attrs.errors;
 
     return (
-      <div className={this.classNames().join(' ')} data-has-value={!!value || (value === 0)} data-focus={this.state.focus}>
+      <div className={this.classNames().join(' ')} data-has-value={!!value || (value === 0)} data-has-errors={!!this.props.errors} data-focus={this.state.focus}>
         {label && <label htmlFor={id}>{label}</label>}
         <input {...attrs} onChange={this.onChange.bind(this)} onFocus={this.onFocus.bind(this)} onBlur={this.onBlur.bind(this)}/>
+        {this.errors()}
       </div>
     );
+  }
+
+  errors() {
+    return (this.props.errors || []).map((msg, i) => <p key={i} className="error">{msg}</p>)
   }
 
   onFocus(e) {
@@ -59,7 +65,7 @@ class RadioButtonField extends Component {
 
     return(
       <div className="field radio-button">
-        <input type="radio" checked={checked} id={id} name={name} value={value} onChange={this.onChange.bind(this)}/>
+        <input type="radio" checked={checked} id={id} name={name} value={value} data-has-errors={!!this.props.errors} onChange={this.onChange.bind(this)}/>
         <label htmlFor={id}>
           <svg className="radio" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle className="ring" cx="20" cy="20" r="9" /><circle className="dot" cx="20" cy="20" r="5" /></svg>
           <span>{this.props.children}</span>
@@ -83,7 +89,7 @@ class Select extends Component {
 
   render() {
     return (
-      <div className={this.classNames().join(' ')}>
+      <div className={this.classNames().join(' ')} data-has-errors={!!this.props.errors}>
         <div className="trigger" onClick={this.showMenu.bind(this)}>
           <span>{this.selectedText()}</span>
           {buttons.dropDown}

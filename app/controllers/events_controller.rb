@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 class EventsController < ApplicationController
+  wrap_parameters include: %i[name start end repeat]
+
   def index
+  end
+
+  def show
+    respond_to do |format|
+      format.json { render json: event }
+    end
   end
 
   def new
     respond_to do |format|
       format.json do
-        @event = current_team.events.new.tap do |event|
-          event.schedule =
-            IceCube::Schedule.new(Time.zone.now, duration: 1.hour)
-        end
-        render json: @event
+        render json: new_blank_event
       end
     end
   end
@@ -22,6 +26,19 @@ class EventsController < ApplicationController
         status = form.save ? :ok : :not_acceptable
         render json: form.event, status: status
       end
+    end
+  end
+
+  private
+
+  def event
+    @event ||= current_team.events.find_by(slug: params[:id])
+  end
+
+  def new_blank_event
+    current_team.events.new.tap do |event|
+      start = (Time.zone.now + 1.hour).beginning_of_hour
+      event.schedule = IceCube::Schedule.new(start, duration: 1.hour)
     end
   end
 end
