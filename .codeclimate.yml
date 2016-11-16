@@ -8,10 +8,9 @@ engines:
     enabled: true
     config:
       languages:
-      - ruby
-      - javascript
-      - python
-      - php
+        ruby:
+        javascript:
+          mass_threshold: 95
   eslint:
     enabled: true
   fixme:
@@ -30,8 +29,6 @@ ratings:
   - "**.js"
   - "**.jsx"
   - "**.module"
-  - "**.php"
-  - "**.py"
 exclude_paths:
 - config/
 - db/

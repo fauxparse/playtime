@@ -21,7 +21,7 @@ class EventEditor extends Component {
     return (
       <form className="edit-event">
         <header>
-          {this.pages().map((page, index) => <button key={`${page}-button`} data-active={this.state.page == page} onClick={(e) => this.tabClicked(e, page, index)}>{bullets[page]}</button>)}
+          {this.pages().map((page, index) => <button key={`${page}-button`} data-active={this.state.page === page} onClick={(e) => this.tabClicked(e, page, index)}>{bullets[page]}</button>)}
         </header>
         <VelocityTransitionGroup component="fieldset" disabled={this.props.disabled} {...this.pageAnimation()}>
           {this[`${page}Fields`]()}
@@ -99,29 +99,28 @@ class EventEditor extends Component {
   repeatRuleDetails(event) {
     const { repeat, start } = event;
     const locale = moment.localeData();
-    switch(repeat.interval) {
-      case 'week':
-        let weekdays = moment.localeData().weekdays();
-        return (
-          <div className="weekdays row">
-            <span>on</span>
-            {weekdays.map((name, index) => <button key={name} value={index} data-selected={repeat.weekdays.indexOf(index) > -1} onClick={(e) => this.toggleWeekday(e, index)} title={name}>{name.substr(0, 1)}</button>)}
-          </div>
+    if (repeat.interval === 'week') {
+      let weekdays = moment.localeData().weekdays();
+      return (
+        <div className="weekdays row">
+          <span>on</span>
+          {weekdays.map((name, index) => <button key={name} value={index} data-selected={repeat.weekdays.indexOf(index) > -1} onClick={(e) => this.toggleWeekday(e, index)} title={name}>{name.substr(0, 1)}</button>)}
+        </div>
+      )
+    } else if (repeat.interval === 'month') {
+      let week = Math.floor(start.date() / 7) + 1;
+      let isLast = !start.clone().add(1, 'week').isSame(start, 'month');
+      let options = [
+        <RadioButtonField key="dom" name="event[repeat][monthly]" value={0} checked={!!repeat.day_of_month} onChange={this.changeMonthlyRepeat}>{`on the ${locale.ordinal(start.date())}`}</RadioButtonField>,
+        <RadioButtonField key="wom" name="event[repeat][monthly]" value={week} checked={repeat.week_of_month === week} onChange={this.changeMonthlyRepeat}>{`on the ${locale.ordinal(week)} ${locale.weekdays()[start.day()]}`}</RadioButtonField>
+      ];
+      if (isLast) {
+        options.push(
+          <RadioButtonField key="lom" name="event[repeat][monthly]" value={-1} checked={repeat.week_of_month === -1} onChange={this.changeMonthlyRepeat}>{`on the last ${locale.weekdays()[start.day()]}`}</RadioButtonField>
         )
-      case 'month':
-        let week = Math.floor(start.date() / 7) + 1;
-        let isLast = !start.clone().add(1, 'week').isSame(start, 'month');
-        let options = [
-          <RadioButtonField key="dom" name="event[repeat][monthly]" value={0} checked={!!repeat.day_of_month} onChange={this.changeMonthlyRepeat}>{`on the ${locale.ordinal(start.date())}`}</RadioButtonField>,
-          <RadioButtonField key="wom" name="event[repeat][monthly]" value={week} checked={repeat.week_of_month == week} onChange={this.changeMonthlyRepeat}>{`on the ${locale.ordinal(week)} ${locale.weekdays()[start.day()]}`}</RadioButtonField>
-        ];
-        if (isLast) {
-          options.push(
-            <RadioButtonField key="lom" name="event[repeat][monthly]" value={-1} checked={repeat.week_of_month == -1} onChange={this.changeMonthlyRepeat}>{`on the last ${locale.weekdays()[start.day()]}`}</RadioButtonField>
-          )
-        }
+      }
 
-        return options;
+      return options;
     }
   }
 
@@ -152,7 +151,7 @@ class EventEditor extends Component {
       },
       leave: {
         duration: 500,
-        animation: direction > 0 ? 'slidePageLeft' : 'slidePageRight',
+        animation: direction > 0 ? 'slidePageLeft' : 'slidePageRight'
       }
     }
   }
@@ -203,7 +202,7 @@ class EventEditor extends Component {
 
   changeMonthlyRepeat(e, value) {
     var { event } = this.props;
-    if (value == 0) {
+    if (value === 0) {
       delete event.repeat.week_of_month;
       event.repeat.day_of_month = event.start.date();
     } else {
@@ -217,16 +216,11 @@ class EventEditor extends Component {
     var { event } = this.props,
         step = event.repeat ? event.repeat.step : 1,
         repeat = { interval: value, step, until: false };
-    if (!event.repeat || event.repeat.interval != value) {
-      switch(value) {
-        case 'day':
-          break;
-        case 'week':
-          repeat.weekdays = [event.start.day()];
-          break;
-        case 'month':
-          repeat.day_of_month = event.start.date();
-          break;
+    if (!event.repeat || event.repeat.interval !== value) {
+      if (value === 'week') {
+        repeat.weekdays = [event.start.day()];
+      } else if (value === 'month') {
+        repeat.day_of_month = event.start.date();
       }
       event.repeat = repeat;
       this.changed(event);

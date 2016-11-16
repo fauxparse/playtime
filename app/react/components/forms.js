@@ -4,6 +4,8 @@ import { buttons } from '../icons';
 
 const idFromName = (name) => name.replace(/\]?\[/g, '_').replace(/\]$/, '')
 
+const classNames = (...classes) => classes.filter((klass) => !!klass).join(' ')
+
 class Field extends Component {
   constructor(props) {
     super(props);
@@ -21,9 +23,9 @@ class Field extends Component {
     delete attrs.errors;
 
     return (
-      <div className={this.classNames().join(' ')} data-has-value={!!value || (value === 0)} data-has-errors={!!this.props.errors} data-focus={this.state.focus}>
+      <div className={classNames('field', this.props.className, this.props.label && 'with-floating-label')} data-has-value={!!value || (value === 0)} data-has-errors={!!this.props.errors} data-focus={this.state.focus}>
         {label && <label htmlFor={id}>{label}</label>}
-        <input {...attrs} onChange={this.onChange.bind(this)} onFocus={this.onFocus.bind(this)} onBlur={this.onBlur.bind(this)}/>
+        <input {...attrs} onChange={this.onChange.bind(this)} onFocus={this.onFocus.bind(this, true)} onBlur={this.onFocus.bind(this, false)}/>
         {this.errors()}
       </div>
     );
@@ -33,28 +35,18 @@ class Field extends Component {
     return (this.props.errors || []).map((msg, i) => <p key={i} className="error">{msg}</p>)
   }
 
-  onFocus(e) {
-    this.setState({ focus: true });
-    if (this.props.onFocus) this.props.onFocus(e);
-  }
-
-  onBlur(e) {
-    this.setState({ focus: false });
-    if (this.props.onBlur) this.props.onBlur(e);
+  onFocus(focus, e) {
+    const handler = this.props[['onBlur', 'onFocus'][+focus]];
+    this.setState({ focus: focus });
+    if (handler) handler(e);
   }
 
   onChange(e) {
     let value = e.target.value;
-    if (this.props.type == 'number') {
+    if (this.props.type === 'number') {
       value = parseInt(value, 10);
     }
     this.props.onChange(e, value);
-  }
-
-  classNames() {
-    var classNames = ['field', this.props.className].filter((klass) => !!klass);
-    if (this.props.label) classNames.push('with-floating-label');
-    return classNames;
   }
 }
 
@@ -89,7 +81,7 @@ class Select extends Component {
 
   render() {
     return (
-      <div className={this.classNames().join(' ')} data-has-errors={!!this.props.errors}>
+      <div className={this.classNames()} data-has-errors={!!this.props.errors}>
         <div className="trigger" onClick={this.showMenu.bind(this)}>
           <span>{this.selectedText()}</span>
           {buttons.dropDown}
@@ -104,7 +96,7 @@ class Select extends Component {
 
   selected() {
     return this.props.options
-      .filter(({ value }) => value == this.props.value)
+      .filter(({ value }) => value === this.props.value)
       .shift();
   }
 
@@ -112,7 +104,7 @@ class Select extends Component {
     const { options, value } = this.props;
     var index = 0;
     while (index < options.length) {
-      if (options[index].value == value) return index;
+      if (options[index].value === value) return index;
       index++;
     }
     return -1;
@@ -131,7 +123,7 @@ class Select extends Component {
     const { options, value: selected } = this.props;
     return (
       <ul className="menu" style={{ top: `${this.state.selectedIndex * -2.5 - 0.75}rem` }}>
-        {options.map(({ label, value }) => <li key={value} data-selected={value == selected} onClick={(e) => this.valueClicked(e, value)}>{label}</li>)}
+        {options.map(({ label, value }) => <li key={value} data-selected={value === selected} onClick={(e) => this.valueClicked(e, value)}>{label}</li>)}
       </ul>
     )
   }
@@ -146,9 +138,7 @@ class Select extends Component {
   }
 
   classNames() {
-    var classNames = ['select', this.props.className].filter((klass) => !!klass);
-    if (this.props.label) classNames.push('with-floating-label');
-    return classNames;
+    return classNames('select', this.props.className, this.props.label && 'with-floating-label');
   }
 }
 
@@ -198,7 +188,7 @@ class DateField extends Select {
   }
 
   classNames() {
-    return super.classNames().concat(['date']);
+    return super.classNames() + ' date';
   }
 }
 
@@ -206,9 +196,13 @@ class TimeSpinner extends Component {
   render() {
     return (
       <div>
-        <button onClick={(e) => this.increment(e, -1)}>{buttons.down}</button><span>{(this.props.format || this.format)(this.props.value)}</span><button onClick={(e) => this.increment(e)}>{buttons.up}</button>
+        {this.button(-1, buttons.down)}<span>{(this.props.format || this.format)(this.props.value)}</span>{this.button(1, buttons.up)}
       </div>
     )
+  }
+
+  button(increment, icon) {
+    return <button onClick={(e) => this.increment(e, increment)}>{icon}</button>
   }
 
   format(value) {
@@ -239,9 +233,9 @@ class TimeField extends Select {
   menu() {
     return (
       <div className="menu">
-        <TimeSpinner value={this.props.value.hour()} min={0} max={23} format={n => (n % 12 || 12).toString().padLeft(2, '\u2007')} onChange={(e, value) => this.setHour(e, value)}/>
+        <TimeSpinner value={this.props.value.hour()} min={0} max={23} format={n => (n % 12 || 12).toString().padLeft(2, '\u2007')} onChange={(e, value) => this.setTimeComponent(e, 'hour', value)}/>
         <span>:</span>
-        <TimeSpinner value={Math.floor(this.props.value.minute() / 5)} min={0} max={11} format={n => (n * 5).toString().padLeft(2, '0')} onChange={(e, value) => this.setMinute(e, value * 5)}/>
+        <TimeSpinner value={Math.floor(this.props.value.minute() / 5)} min={0} max={11} format={n => (n * 5).toString().padLeft(2, '0')} onChange={(e, value) => this.setTimeComponent(e, 'minute', value * 5)}/>
         <span/>
         <TimeSpinner value={Math.floor(this.props.value.hour() / 12)} min={0} max={1} format={n => ['AM', 'PM'][n]} onChange={(e, value) => this.setAmpm(e, value)}/>
       </div>
@@ -249,18 +243,12 @@ class TimeField extends Select {
   }
 
   classNames() {
-    return super.classNames().concat(['time']);
+    return super.classNames() + ' time';
   }
 
-  setHour(e, value) {
+  setTimeComponent(e, component, value) {
     var time = this.props.value.clone();
-    time.hour(value);
-    this.changed(e, time);
-  }
-
-  setMinute(e, value) {
-    var time = this.props.value.clone();
-    time.minute(value);
+    time[component](value);
     this.changed(e, time);
   }
 

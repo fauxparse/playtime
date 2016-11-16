@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EventsController < ApplicationController
-  wrap_parameters include: %i[name start end repeat]
+  wrap_parameters include: %i(name start end repeat)
 
   def index
   end
