@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import RWRRedux from 'rwr-redux';
+import { push } from 'react-router-redux';
 
 class Events extends Component {
   render() {
@@ -13,8 +13,16 @@ class Events extends Component {
   }
 }
 
+Events.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 function mapStateToProps(state) {
   return { };
 }
 
-export default connect(mapStateToProps)(Events);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return { }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Events);

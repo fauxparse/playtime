@@ -52,17 +52,10 @@ class NewEvent extends Component {
       .then(([json, _]) => {
         this.setState({ saveState: this.state.responseStatus > 400 ? 'error' : 'success' });
         this.eventChanged(json);
+        if (json.id) {
+          this.context.router.push(`/teams/${this.props.params.team}/events/${json.id}`);
+        }
       });
-  }
-
-  saveClass() {
-    return [
-      'save',
-      'save saving',
-      'save error',
-      'save saving',
-      'save success'
-    ][this.state.saving];
   }
 
   eventChanged(event) {
@@ -86,8 +79,18 @@ class NewEvent extends Component {
   }
 }
 
-function mapStateToProps(state) {
+NewEvent.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => {
   return { };
 }
 
-export default connect(mapStateToProps)(NewEvent);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    goToEvent: (event) => dispatch(push(`/teams/${ownProps.params.team}/events/${event.id}`))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewEvent);

@@ -96,8 +96,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    closePopup: () => dispatch(push(`/teams/${ownProps.params.team}/events`))
-  }
+  return { }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Team);
