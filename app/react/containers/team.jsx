@@ -78,7 +78,7 @@ class Team extends Component {
 
 Team.find = function(id) {
   const { teams } = RWRRedux.getStore('Store').getState();
-  return teams.filter((team) => team.id == id)[0];
+  return teams.filter((team) => team.id === id)[0];
 }
 
 Team.onEnter = function(nextState, replace) {
