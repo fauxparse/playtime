@@ -10,6 +10,14 @@ class Sidebar extends Component {
   }
 
   render() {
+    const nav = (menu) => (
+      <nav>
+        <VelocityTransitionGroup component="ul" {...this.menuAnimation()}>
+          {menu}
+        </VelocityTransitionGroup>
+      </nav>
+    )
+
     return (
       <aside>
         <header>
@@ -22,16 +30,8 @@ class Sidebar extends Component {
           </button>
         </header>
         <section>
-          <nav>
-            <VelocityTransitionGroup component="ul" {...this.menuAnimation()}>
-              {this.teamMenu()}
-            </VelocityTransitionGroup>
-          </nav>
-          <nav>
-            <VelocityTransitionGroup component="ul" {...this.menuAnimation()}>
-              {this.teamsMenu()}
-            </VelocityTransitionGroup>
-          </nav>
+          {nav(this.teamMenu())}
+          {nav(this.teamsMenu())}
         </section>
       </aside>
     );
