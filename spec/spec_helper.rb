@@ -33,6 +33,10 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = 'tmp/rspec_examples.txt'
   config.order = :random
 
+  config.after(:each) do
+    Timecop.return
+  end
+
   config.after(:suite) do
     WebMock.disable!
   end

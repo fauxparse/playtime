@@ -3,6 +3,11 @@ class EventsController < ApplicationController
   wrap_parameters include: %i(name start end repeat)
 
   def index
+    respond_to do |format|
+      format.json do
+        render json: EventList.new(current_member, dates)
+      end
+    end
   end
 
   def show
@@ -40,5 +45,15 @@ class EventsController < ApplicationController
       start = (Time.zone.now + 1.hour).beginning_of_hour
       event.schedule = IceCube::Schedule.new(start, duration: 1.hour)
     end
+  end
+
+  def dates
+    start = parse_date(params[:start], Date.today)
+    stop = parse_date(params[:end], start + 1.month - 1.day)
+    { start_date: start, end_date: stop }
+  end
+
+  def parse_date(param, default)
+    param && Date.parse(param) || default
   end
 end

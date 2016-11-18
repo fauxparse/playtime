@@ -13,4 +13,8 @@ class Team < ApplicationRecord
   def to_s
     name
   end
+
+  def time_zone
+    Time.zone
+  end
 end

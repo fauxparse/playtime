@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110030842) do
+ActiveRecord::Schema.define(version: 20161116191545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(version: 20161110030842) do
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
+  create_table "occurrences", force: :cascade do |t|
+    t.integer  "event_id"
+    t.datetime "starts_at"
+    t.index ["event_id", "starts_at"], name: "index_occurrences_on_event_id_and_starts_at", unique: true, using: :btree
+    t.index ["event_id"], name: "index_occurrences_on_event_id", using: :btree
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string   "name",       limit: 128
     t.string   "slug",       limit: 128
@@ -92,4 +99,5 @@ ActiveRecord::Schema.define(version: 20161110030842) do
   add_foreign_key "invitations", "members", on_delete: :cascade
   add_foreign_key "members", "teams"
   add_foreign_key "members", "users"
+  add_foreign_key "occurrences", "events", on_delete: :cascade
 end
