@@ -14,11 +14,28 @@ class Event < ApplicationRecord
 
   validates :name, :schedule, :starts_at, presence: true
 
+  def time_zone
+    team.try(:time_zone) || Time.zone
+  end
+
+  def occurrences
+    @occurrences ||= Occurrences.new(self)
+  end
+
+  def self.within(start_date, end_date)
+    where(
+      'starts_at < :end ' \
+      'AND (stops_repeating_at IS NULL OR stops_repeating_at > :start)',
+      start: start_date.beginning_of_day,
+      end: end_date.end_of_day
+    )
+  end
+
   def self.schedule_from_yaml(yaml)
     if yaml.present?
       IceCube::Schedule.from_yaml(yaml)
     else
-      IceCube::Schedule.new(Time.zone.now, duration: 1.hour)
+      IceCube::Schedule.new(Time.now.beginning_of_minute, duration: 1.hour)
     end
   end
 

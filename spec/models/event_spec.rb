@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
-  subject(:event) { build(:event) }
+  subject(:event) { create(:event) }
 
   before { Timecop.freeze }
   after { Timecop.return }
@@ -19,7 +19,7 @@ RSpec.describe Event, type: :model do
     end
 
     it 'is today for one hour' do
-      expect(schedule.occurs_at?(Time.zone.now)).to be true
+      expect(schedule.occurs_at?(Time.zone.now.beginning_of_minute)).to be true
       expect(schedule.duration).to eq 1.hour
     end
 
@@ -63,6 +63,68 @@ RSpec.describe Event, type: :model do
 
     it 'uses the event name' do
       expect(param).to eq 'a-bug-hunt'
+    end
+  end
+
+  describe '#occurrences' do
+    subject(:occurrences) { event.occurrences }
+    let(:start) { event.starts_at.to_date }
+    let(:stop) { start + 1.month - 1.day }
+    let(:bounded) { occurrences.between(start, stop) }
+
+    context 'for a single event' do
+      it 'has a size of 1' do
+        expect(occurrences.size).to eq 1
+      end
+
+      it 'has one occurrence' do
+        expect(bounded.first).to be_an_instance_of(Occurrence)
+      end
+
+      it 'starts at the right time' do
+        expect(bounded.first.starts_at).to eq event.starts_at
+      end
+
+      describe '#between' do
+        it 'takes a block' do
+          list = []
+          start = event.starts_at.to_date
+          occurrences.between(start, start + 1.month - 1.day) do |occurrence|
+            list << occurrence
+          end
+          expect(list).to have_exactly(1).item
+        end
+      end
+
+      context 'when the occurrence has been saved' do
+        before do
+          event.occurrences.first.save
+        end
+
+        it 'uses the saved instance' do
+          expect(event.reload.occurrences.first).to be_persisted
+        end
+      end
+    end
+
+    context 'for a repeating event' do
+      let(:event) { create(:event, :scheduled) }
+
+      it 'has a size of 1' do
+        expect(occurrences.size).to eq BigDecimal::INFINITY
+      end
+
+      it 'has five occurrences' do
+        expect(bounded).to have_exactly(5).items
+      end
+
+      context 'given times instead of dates' do
+        let(:start) { event.starts_at.beginning_of_day }
+
+        it 'still works' do
+          expect(bounded).to have_exactly(5).items
+        end
+      end
     end
   end
 end

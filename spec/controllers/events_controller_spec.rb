@@ -9,6 +9,48 @@ RSpec.describe EventsController, type: :controller do
   let(:team_id) { team.to_param }
   let(:json) { JSON.parse(response.body).deep_symbolize_keys }
 
+  describe '#index' do
+    let(:json) { JSON.parse(response.body).map(&:deep_symbolize_keys) }
+    let(:extra) { {} }
+
+    before do
+      Timecop.freeze Time.zone.local(2016, 11, 1)
+      create(:event, :scheduled, team: team)
+      get :index, params: { team_id: team_id }.merge(extra), format: :json
+    end
+
+    it 'renders a list of occurrences' do
+      expect(json).to have_exactly(4).items
+      expect(json.first).to match hash_including(date: '2016-11-04')
+      expect(json.second).to match hash_including(date: '2016-11-11')
+      expect(json.third).to match hash_including(date: '2016-11-18')
+      expect(json.fourth).to match hash_including(date: '2016-11-25')
+    end
+
+    context 'with a start parameter' do
+      let(:extra) { { start: '2016-12-01' } }
+
+      it 'renders a list of occurrences' do
+        expect(json).to have_exactly(5).items
+        expect(json.first).to match hash_including(date: '2016-12-02')
+        expect(json.second).to match hash_including(date: '2016-12-09')
+        expect(json.third).to match hash_including(date: '2016-12-16')
+        expect(json.fourth).to match hash_including(date: '2016-12-23')
+        expect(json.fifth).to match hash_including(date: '2016-12-30')
+      end
+
+      context 'and an end parameter' do
+        let(:extra) { { start: '2016-12-01', end: '2016-12-15' } }
+
+        it 'renders a list of occurrences' do
+          expect(json).to have_exactly(2).items
+          expect(json.first).to match hash_including(date: '2016-12-02')
+          expect(json.second).to match hash_including(date: '2016-12-09')
+        end
+      end
+    end
+  end
+
   describe '#new' do
     before { get :new, params: { team_id: team_id }, format: :json }
 
