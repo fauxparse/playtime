@@ -11,8 +11,10 @@ RSpec.feature 'User creates an event', js: true do
     visit(new_team_event_path(team))
     fill_in('Event name', with: 'Routine salvage operation')
     find(:css, '.new-event [rel="save"]').trigger('click')
+    today = Time.zone.now.to_date
+    url = "/teams/sulaco/events/routine-salvage-operation/#{today.to_param}"
     expect(page).to have_content('Routine salvage operation')
-    expect(current_path).to eq '/teams/sulaco/events/routine-salvage-operation'
+    expect(current_path).to eq url
     expect(Event.find_by(name: 'Routine salvage operation')).not_to be_nil
   end
 end

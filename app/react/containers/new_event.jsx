@@ -53,7 +53,8 @@ class NewEvent extends Component {
         this.setState({ saveState: this.state.responseStatus > 400 ? 'error' : 'success' });
         this.eventChanged(json);
         if (json.id) {
-          this.context.router.push(`/teams/${this.props.params.team}/events/${json.id}`);
+          let start = moment.tz(json.start, json.time_zone);
+          this.context.router.push(`/teams/${this.props.params.team}/events/${json.id}/${start.format('YYYY-MM-DD')}`);
         }
       });
   }
@@ -61,18 +62,18 @@ class NewEvent extends Component {
   eventChanged(event) {
     if (event) {
       event.name = event.name || '';
-      event.start = this.parseMoment(event.start);
-      event.end = this.parseMoment(event.end);
+      event.start = this.parseMoment(event.start, event.time_zone);
+      event.end = this.parseMoment(event.end, event.time_zone);
       if (event.repeat && event.repeat.until) {
-        event.repeat.until = this.parseMoment(event.repeat.until);
+        event.repeat.until = this.parseMoment(event.repeat.until, event.time_zone);
       }
     }
     this.setState({ event });
   }
 
-  parseMoment(time) {
+  parseMoment(time, zone) {
     if (time && !moment.isMoment(time)) {
-      return moment(time);
+      return moment.tz(time, zone);
     } else {
       return time;
     }

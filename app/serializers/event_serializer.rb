@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :start, :end, :repeat
+  attributes :id, :name, :start, :end, :repeat, :time_zone
   attribute :errors, if: :errors?
 
   def id
@@ -25,6 +25,10 @@ class EventSerializer < ActiveModel::Serializer
 
   def errors
     object.errors.to_hash(true)
+  end
+
+  def time_zone
+    ActiveSupport::TimeZone::MAPPING[object.time_zone.name]
   end
 
   private

@@ -18,7 +18,7 @@ export default (
       <Route path="inbox" component={Inbox}/>
       <Route path="events" component={Events}>
         <Route path="new" components={{modal: NewEvent}}/>
-        <Route path=":event" component={Event}/>
+        <Route path=":event/:date(\d{4}-\d{2}-\d{2})" component={Event}/>
       </Route>
       <Route path="people" component={People}/>
       <Route path="stats" component={Stats}/>
