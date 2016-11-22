@@ -18,7 +18,11 @@ Rails.application.routes.draw do
 
   resources :teams do
     resource :inbox, controller: 'inbox'
-    resources :events
+    resources :events do
+      member do
+        get ':date' => 'events#show'
+      end
+    end
     resources :people
     resources :stats
   end

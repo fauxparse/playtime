@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RWRRedux from 'rwr-redux';
 import fetch from '../fetch';
+import EventModel from '../models/event';
 
 class Event extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Event extends Component {
 
     fetch(`/teams/${props.params.team}/events/${props.params.event}`)
       .then((response) => response.json())
-      .then((event) => this.setState({ event }));
+      .then((event) => this.setEvent(event));
   }
 
   render() {
@@ -20,6 +21,11 @@ class Event extends Component {
         {event && event.name}
       </section>
     );
+  }
+
+  setEvent(attributes) {
+    const event = new EventModel(attributes);
+    this.setState({ event });
   }
 }
 

@@ -43,7 +43,7 @@
   "scripts": {
     "build": "webpack -p --config webpack/production.config.js",
     "start": "webpack -w --config webpack/dev.config.js",
-    "start-hot-dev": "webpack-dev-server --hot --inline --config webpack/hot-dev.config.js",
+    "start-hot-dev": "webpack-dev-server --hot -d --inline --config webpack/hot-dev.config.js",
     "postinstall": "webpack -p --config webpack/production.config.js"
   },
   "license": "",

@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :start, :end, :repeat, :time_zone
+  attributes :id, :team, :name, :start, :end, :repeat, :time_zone
   attribute :errors, if: :errors?
 
   def id
     object.to_param
+  end
+
+  def team
+    object.team.to_param
   end
 
   def start
