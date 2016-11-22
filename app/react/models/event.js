@@ -1,6 +1,6 @@
 import Model from './model';
 
-class EventModel extends Model {
+class Event extends Model {
   toJSON() {
     return Object.assign({}, super.toJSON(), {
       name: this.name,
@@ -10,7 +10,11 @@ class EventModel extends Model {
     })
   }
 
-  url() {
+  get key() {
+    return `Event#${this.id}@${this.start.format('YYYY-MM-DD')}`;
+  }
+
+  get url() {
     var path = `/teams/${this.team}/events/`;
     if (this.id) path += `${this.id}/${this.start.format('YYYY-MM-DD')}`;
     return path;
@@ -80,4 +84,4 @@ class EventModel extends Model {
   }
 }
 
-export default EventModel;
+export default Event;

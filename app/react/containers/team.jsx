@@ -21,7 +21,8 @@ function tabIndex(key) {
 class Team extends Component {
   constructor(props) {
     super(props);
-    this.state = { direction: 1, tabIndex: -1 };
+    const tabIndex = TABS.map(({ key }) => key).indexOf(props.location.pathname.split('/')[3]);
+    this.state = { direction: 1, tabIndex };
   }
 
   render() {

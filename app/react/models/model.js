@@ -3,6 +3,10 @@ export default class Model {
     this.attributes = attributes;
   }
 
+  get key() {
+    return `${this.constructor.name}#${this.id}`;
+  }
+
   toJSON() {
     var json = {};
     if (this.id) {

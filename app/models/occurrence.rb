@@ -12,6 +12,10 @@ class Occurrence < ApplicationRecord
     @param ||= Time.use_zone(event.time_zone) { starts_at.to_date.to_param }
   end
 
+  def ends_at
+    starts_at + event.duration
+  end
+
   def self.between(start_time, end_time)
     ordered.where(
       ':start <= starts_at AND starts_at <= :end',

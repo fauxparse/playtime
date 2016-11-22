@@ -51,7 +51,7 @@ class NewEvent extends Component {
         this.setState({ saveState: this.state.responseStatus > 400 ? 'error' : 'success' });
         const event = this.eventChanged(json);
         if (event.id) {
-          this.context.router.push(event.url());
+          this.context.router.push(event.url);
         }
       });
   }

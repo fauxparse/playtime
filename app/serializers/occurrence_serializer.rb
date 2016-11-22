@@ -1,21 +1,29 @@
 # frozen_string_literal: true
 class OccurrenceSerializer < ActiveModel::Serializer
-  attributes :team, :event, :date, :time
+  attributes :id, :team, :name, :start, :end, :time_zone
+
+  def id
+    object.event.to_param
+  end
 
   def team
     object.event.team.to_param
   end
 
-  def event
-    object.event.to_param
+  def name
+    object.event.name
   end
 
-  def date
-    with_appropriate_time_zone { object.starts_at.to_date.to_param }
-  end
-
-  def time
+  def start
     with_appropriate_time_zone { object.starts_at.iso8601 }
+  end
+
+  def end
+    with_appropriate_time_zone { object.ends_at.iso8601 }
+  end
+
+  def time_zone
+    ActiveSupport::TimeZone::MAPPING[object.event.time_zone.name]
   end
 
   private

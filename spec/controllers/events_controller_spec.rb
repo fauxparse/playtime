@@ -21,10 +21,10 @@ RSpec.describe EventsController, type: :controller do
 
     it 'renders a list of occurrences' do
       expect(json).to have_exactly(4).items
-      expect(json.first).to match hash_including(date: '2016-11-04')
-      expect(json.second).to match hash_including(date: '2016-11-11')
-      expect(json.third).to match hash_including(date: '2016-11-18')
-      expect(json.fourth).to match hash_including(date: '2016-11-25')
+      expect(json.first).to match hash_including(start: '2016-11-04T21:00:00+13:00')
+      expect(json.second).to match hash_including(start: '2016-11-11T21:00:00+13:00')
+      expect(json.third).to match hash_including(start: '2016-11-18T21:00:00+13:00')
+      expect(json.fourth).to match hash_including(start: '2016-11-25T21:00:00+13:00')
     end
 
     context 'with a start parameter' do
@@ -32,11 +32,11 @@ RSpec.describe EventsController, type: :controller do
 
       it 'renders a list of occurrences' do
         expect(json).to have_exactly(5).items
-        expect(json.first).to match hash_including(date: '2016-12-02')
-        expect(json.second).to match hash_including(date: '2016-12-09')
-        expect(json.third).to match hash_including(date: '2016-12-16')
-        expect(json.fourth).to match hash_including(date: '2016-12-23')
-        expect(json.fifth).to match hash_including(date: '2016-12-30')
+        expect(json.first).to match hash_including(start: '2016-12-02T21:00:00+13:00')
+        expect(json.second).to match hash_including(start: '2016-12-09T21:00:00+13:00')
+        expect(json.third).to match hash_including(start: '2016-12-16T21:00:00+13:00')
+        expect(json.fourth).to match hash_including(start: '2016-12-23T21:00:00+13:00')
+        expect(json.fifth).to match hash_including(start: '2016-12-30T21:00:00+13:00')
       end
 
       context 'and an end parameter' do
@@ -44,8 +44,8 @@ RSpec.describe EventsController, type: :controller do
 
         it 'renders a list of occurrences' do
           expect(json).to have_exactly(2).items
-          expect(json.first).to match hash_including(date: '2016-12-02')
-          expect(json.second).to match hash_including(date: '2016-12-09')
+          expect(json.first).to match hash_including(start: '2016-12-02T21:00:00+13:00')
+          expect(json.second).to match hash_including(start: '2016-12-09T21:00:00+13:00')
         end
       end
     end

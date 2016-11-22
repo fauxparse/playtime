@@ -234,3 +234,63 @@ button[rel="save"] {
     animation: show-expression .25s ease alternate forwards;
   }
 }
+
+.event-list {
+  @include position(absolute, 0% null 0% 0%);
+  width: 100%;
+  margin: 0;
+  padding: 0 0 6rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: flex;
+    align-items: flex-start;
+    color: $base-font-color;
+  }
+
+  .date {
+    flex: 0 0 4rem;
+    line-height: 1;
+    text-align: center;
+    padding: .75rem 1rem 0;
+    margin-right: 1rem;
+  }
+
+  .day {
+    display: block;
+    font-weight: $light-font-weight;
+    font-size: 1.5rem;
+  }
+
+  .month {
+    display: block;
+    text-transform: uppercase;
+    font-size: $small-font-size;
+    line-height: 1.25rem;
+    color: $secondary-font-color;
+  }
+
+  .details {
+    flex: 1;
+    border-bottom: $base-border;
+    padding: 1rem 1rem 1rem 0;
+    line-height: 1.25rem;
+
+    b {
+      @include ellipsis;
+      display: block;
+      font-weight: normal;
+    }
+
+    small {
+      font-size: $base-font-size;
+      color: $secondary-font-color;
+    }
+  }
+}
