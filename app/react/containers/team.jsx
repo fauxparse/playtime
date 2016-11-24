@@ -37,7 +37,7 @@ class Team extends Component {
         <VelocityTransitionGroup component="section" {...this.pageAnimation()}>
           {React.cloneElement(children, { key: location.pathname.split('/').slice(0, 4).join('/') })}
         </VelocityTransitionGroup>
-        <footer className="tabs" aria-role="navigation">
+        <footer className="tabs" role="navigation">
           <div key="add" rel="add" role="button">
             <Link rel="open" to={`/teams/${params.team}/events/new`} activeClassName="active"/>
             <Link rel="close" to={`/teams/${params.team}/events`}/>

@@ -238,10 +238,6 @@ button[rel="save"] {
 .event-list {
   @include position(absolute, 0% null 0% 0%);
   width: 100%;
-  margin: 0;
-  padding: 0 0 6rem;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 
   li {
     margin: 0;
