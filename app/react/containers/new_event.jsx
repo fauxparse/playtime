@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import RWRRedux from 'rwr-redux';
 import { VelocityTransitionGroup } from 'velocity-react';
 import { buttons } from '../icons';
+import Event from '../models/event';
 import EventEditor from '../components/event_editor';
 import fetch from '../fetch';
 
@@ -30,12 +31,9 @@ class NewEvent extends Component {
   }
 
   save() {
-    var json = Object.assign({}, this.state.event),
+    var json = this.state.event.toJSON(),
         timeout = new Promise((resolve, reject) => setTimeout(resolve, 1500)),
         status;
-
-    delete json.id;
-    delete json.errors;
 
     this.setState({ saveState: 'saving' })
     var loader = fetch(`/teams/${this.props.params.team}/events`, {
@@ -51,32 +49,17 @@ class NewEvent extends Component {
     Promise.all([loader, timeout])
       .then(([json, _]) => {
         this.setState({ saveState: this.state.responseStatus > 400 ? 'error' : 'success' });
-        this.eventChanged(json);
-        if (json.id) {
-          let start = moment.tz(json.start, json.time_zone);
-          this.context.router.push(`/teams/${this.props.params.team}/events/${json.id}/${start.format('YYYY-MM-DD')}`);
+        const event = this.eventChanged(json);
+        if (event.id) {
+          this.context.router.push(event.url);
         }
       });
   }
 
-  eventChanged(event) {
-    if (event) {
-      event.name = event.name || '';
-      event.start = this.parseMoment(event.start, event.time_zone);
-      event.end = this.parseMoment(event.end, event.time_zone);
-      if (event.repeat && event.repeat.until) {
-        event.repeat.until = this.parseMoment(event.repeat.until, event.time_zone);
-      }
-    }
+  eventChanged(attributes) {
+    const event = new Event(attributes);
     this.setState({ event });
-  }
-
-  parseMoment(time, zone) {
-    if (time && !moment.isMoment(time)) {
-      return moment.tz(time, zone);
-    } else {
-      return time;
-    }
+    return event;
   }
 }
 

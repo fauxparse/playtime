@@ -22,6 +22,8 @@ class Event < ApplicationRecord
     @occurrences ||= Occurrences.new(self)
   end
 
+  delegate :duration, to: :schedule
+
   def self.within(start_date, end_date)
     where(
       'starts_at < :end ' \

@@ -14,9 +14,8 @@ describe OccurrenceSerializer do
     it 'serializes the team, event, date, and time' do
       expect(json).to match a_hash_including(
         team:  'sulaco',
-        event: 'bug-hunt',
-        date:  '2016-10-21',
-        time:  '2016-10-21T21:00:00+13:00'
+        id:    'bug-hunt',
+        start: '2016-10-21T21:00:00+13:00'
       )
     end
   end
@@ -26,32 +25,28 @@ describe OccurrenceSerializer do
       event.occurrences.between('2016-11-01', '2016-11-30')
     end
 
-    it 'serializes the team, event, date, and time' do
-      expect(json).to eq [
-        {
+    it 'serializes the team, event, and time' do
+      expect(json).to match_array [
+        a_hash_including(
           team:  'sulaco',
-          event: 'bug-hunt',
-          date:  '2016-11-04',
-          time:  '2016-11-04T21:00:00+13:00'
-        },
-        {
+          id:    'bug-hunt',
+          start: '2016-11-04T21:00:00+13:00'
+        ),
+        a_hash_including(
           team:  'sulaco',
-          event: 'bug-hunt',
-          date:  '2016-11-11',
-          time:  '2016-11-11T21:00:00+13:00'
-        },
-        {
+          id:    'bug-hunt',
+          start: '2016-11-11T21:00:00+13:00'
+        ),
+        a_hash_including(
           team:  'sulaco',
-          event: 'bug-hunt',
-          date:  '2016-11-18',
-          time:  '2016-11-18T21:00:00+13:00'
-        },
-        {
+          id:    'bug-hunt',
+          start: '2016-11-18T21:00:00+13:00'
+        ),
+        a_hash_including(
           team:  'sulaco',
-          event: 'bug-hunt',
-          date:  '2016-11-25',
-          time:  '2016-11-25T21:00:00+13:00'
-        }
+          id:    'bug-hunt',
+          start: '2016-11-25T21:00:00+13:00'
+        )
       ]
     end
   end

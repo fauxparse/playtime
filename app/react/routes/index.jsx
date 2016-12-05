@@ -5,7 +5,8 @@ import Teams from '../containers/teams';
 import Team from '../containers/team';
 import Inbox from '../containers/inbox';
 import Events from '../containers/events';
-import Event from '../containers/event';
+import EventList from '../containers/event_list';
+import EventDetails from '../containers/event_details';
 import NewEvent from '../containers/new_event';
 import People from '../containers/people';
 import Stats from '../containers/stats';
@@ -17,8 +18,9 @@ export default (
     <Route path="/teams/:team" component={Team}>
       <Route path="inbox" component={Inbox}/>
       <Route path="events" component={Events}>
+        <IndexRoute component={EventList}/>
         <Route path="new" components={{modal: NewEvent}}/>
-        <Route path=":event/:date(\d{4}-\d{2}-\d{2})" component={Event}/>
+        <Route path=":event/:date(\d{4}-\d{2}-\d{2})" component={EventDetails}/>
       </Route>
       <Route path="people" component={People}/>
       <Route path="stats" component={Stats}/>
