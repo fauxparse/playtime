@@ -4,6 +4,7 @@ import RWRRedux from 'rwr-redux';
 import { Link } from 'react-router';
 import { AutoSizer, InfiniteLoader, List } from 'react-virtualized';
 import fetch from '../fetch';
+import { changeTitle } from '../actions';
 import Event from '../models/event';
 
 class EventList extends Component {
@@ -12,8 +13,12 @@ class EventList extends Component {
     this.state = { now: moment(), events: {}, loading: false };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.load();
+  }
+
+  componentDidMount() {
+    this.props.changeTitle('');
   }
 
   render() {
@@ -110,4 +115,10 @@ const mapStateToProps = (state) => {
   return { };
 }
 
-export default connect(mapStateToProps)(EventList);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    changeTitle: (title) => dispatch(changeTitle(title))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventList);

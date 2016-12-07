@@ -1,7 +1,7 @@
 Velocity.RegisterEffect('slidePageIn', {
   defaultDuration: 500,
   calls: [
-    [ { translateX: 0 } ]
+    [ { translateX: 0, opacity: 1 } ]
   ]
 });
 

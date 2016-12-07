@@ -42,15 +42,21 @@ main {
       }
     }
 
-    h2 {
-      @include ellipsis;
+    .title {
       flex: 1;
-      font-size: $base-font-size;
-      font-weight: $base-font-weight;
-      margin: 0;
-      padding: .5rem 0;
-      text-align: center;
-      line-height: $base-line-height;
+      position: relative;
+      align-self: stretch;
+
+      h2 {
+        @include position(absolute, 0% 0% 0% 0%);
+        @include ellipsis;
+        font-size: $base-font-size;
+        font-weight: $base-font-weight;
+        margin: 0;
+        padding: .5rem 0;
+        text-align: center;
+        line-height: $base-line-height;
+      }
 
       &:last-child {
         margin-right: 2.5rem;

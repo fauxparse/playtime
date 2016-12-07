@@ -5,6 +5,7 @@ import RWRRedux from 'rwr-redux';
 import { VelocityTransitionGroup } from 'velocity-react';
 import { Link } from 'react-router';
 import SectionHeader from '../components/section_header';
+import PageSlider from '../components/page_slider';
 import { buttons, tabs } from '../icons';
 
 const TABS = [
@@ -22,21 +23,36 @@ class Team extends Component {
   constructor(props) {
     super(props);
     const tabIndex = TABS.map(({ key }) => key).indexOf(props.location.pathname.split('/')[3]);
-    this.state = { direction: 1, tabIndex };
+    this.state = { direction: PageSlider.LEFT, tabIndex };
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { pathname } = newProps.location;
+    const oldTab = (this.state.pathname || '').split('/').slice(0, 4);
+    const newTab = (pathname || '').split('/').slice(0, 4);
+
+    if (pathname !== this.state.pathname) {
+      if (oldTab[3] === newTab[3]) {
+        this.setState({ pathname, direction: pathname < (this.state.pathname || '') ? PageSlider.RIGHT : PageSlider.LEFT });
+      } else {
+        this.setState({ pathname, direction: tabIndex(newTab[3]) < tabIndex(oldTab[3]) ? PageSlider.RIGHT : PageSlider.LEFT });
+      }
+    }
   }
 
   render() {
-    const { children, location, params, team } = this.props;
+    const { children, location, params, team, title } = this.props;
+    const { direction } = this.state;
     const Tab = ({ label, key }, index) => (
       <Link key={key} to={`/teams/${params.team}/${key}`} activeClassName="active" onClick={(e) => this.tabClicked(index)}>{tabs[key]}<span>{label}</span></Link>
     )
 
     return (
       <section className="tabbed team" key={params.team}>
-        <SectionHeader title={team ? team.name : 'Loading…'}/>
-        <VelocityTransitionGroup component="section" {...this.pageAnimation()}>
-          {React.cloneElement(children, { key: location.pathname.split('/').slice(0, 4).join('/') })}
-        </VelocityTransitionGroup>
+        <SectionHeader title={title} direction={direction}/>
+        <PageSlider direction={direction}>
+          {(!(children.props || {}).modal) && React.cloneElement(children, { key: location.pathname.split('/').slice(0, 4).join('/'), team })}
+        </PageSlider>
         <footer className="tabs" role="navigation">
           <div key="add" rel="add" role="button">
             <Link rel="open" to={`/teams/${params.team}/events/new`} activeClassName="active"/>
@@ -54,26 +70,8 @@ class Team extends Component {
   }
 
   tabClicked(index) {
-    const direction = index > this.state.tabIndex ? 1 : -1;
+    const direction = index > this.state.tabIndex ? PageSlider.LEFT : PageSlider.RIGHT;
     this.setState({ tabIndex: index, direction });
-  }
-
-  pageAnimation() {
-    const { direction } = this.state;
-    return {
-      enter: {
-        duration: 500,
-        animation: 'slidePageIn',
-        style: {
-          translateX: `${direction * 100}%`,
-          opacity: 1
-        }
-      },
-      leave: {
-        duration: 500,
-        animation: direction > 0 ? 'slidePageLeft' : 'slidePageRight'
-      }
-    }
   }
 }
 
@@ -92,11 +90,13 @@ Team.onEnter = function(nextState, replace) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    tab: ownProps.location.pathname.split('/')[3]
+    tab: ownProps.location.pathname.split('/')[3],
+    title: state.title || (ownProps.team ? ownProps.team.name : 'Loading…')
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return { }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Team);
