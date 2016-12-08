@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116191545) do
+ActiveRecord::Schema.define(version: 20161207194714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "availabilities", force: :cascade do |t|
+    t.integer  "member_id"
+    t.integer  "occurrence_id"
+    t.boolean  "available",     default: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["member_id", "occurrence_id"], name: "index_availabilities_on_member_id_and_occurrence_id", unique: true, using: :btree
+    t.index ["member_id"], name: "index_availabilities_on_member_id", using: :btree
+    t.index ["occurrence_id"], name: "index_availabilities_on_occurrence_id", using: :btree
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -94,6 +105,8 @@ ActiveRecord::Schema.define(version: 20161116191545) do
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true, using: :btree
   end
 
+  add_foreign_key "availabilities", "members", on_delete: :cascade
+  add_foreign_key "availabilities", "occurrences", on_delete: :cascade
   add_foreign_key "events", "teams", on_delete: :cascade
   add_foreign_key "invitations", "members", column: "sponsor_id", on_delete: :cascade
   add_foreign_key "invitations", "members", on_delete: :cascade

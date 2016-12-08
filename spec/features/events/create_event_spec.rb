@@ -9,6 +9,7 @@ RSpec.feature 'User creates an event', js: true do
   scenario 'with valid parameters' do
     sign_in_as(admin.user)
     visit(new_team_event_path(team))
+    expect(page).to have_content('Event name')
     fill_in('Event name', with: 'Routine salvage operation')
     find(:css, '.new-event [rel="save"]').trigger('click')
     today = Time.zone.now.to_date

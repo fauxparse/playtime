@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  factory :occurrence do
-  end
   factory :member do
     name 'Ripley'
     user nil

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Occurrence < ApplicationRecord
   belongs_to :event
+  has_many :availabilities, dependent: :destroy
 
   validates :event_id, presence: true
   validates :starts_at, presence: true, uniqueness: { scope: :event_id }
